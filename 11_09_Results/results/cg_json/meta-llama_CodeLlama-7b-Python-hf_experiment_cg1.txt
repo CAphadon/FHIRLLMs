@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/meta-llama_CodeLlama-7b-Python-hf_experiment_cg1.py", line 12
+    // struct to store the tags
+    ^^
+SyntaxError: invalid syntax

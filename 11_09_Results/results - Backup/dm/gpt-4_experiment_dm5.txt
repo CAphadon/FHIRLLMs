@@ -1,0 +1,46 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "123456789",
+        "identifier": [
+          {
+            "system": "http://www.gekid.de/namespace",
+            "value": "Q123456"
+          },
+          {
+            "system": "http://www.gekid.de/namespace",
+            "value": "555555"
+          }
+        ],
+        "name": [
+          {
+            "family": "Max",
+            "given": [
+              "Mustermann"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "2023-04-02",
+        "address": [
+          {
+            "line": [
+              "Bahnhofstr. 1"
+            ],
+            "city": "Tuebingen",
+            "postalCode": "70070",
+            "country": "DE"
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    }
+  ]
+}

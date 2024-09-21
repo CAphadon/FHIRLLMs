@@ -1,0 +1,39 @@
+### Testing
+
+To run the tests, run this command:
+
+    npm run test
+
+### Building
+
+To build the code, run this command:
+
+    npm run build
+
+### Deployment
+
+To deploy the code, run this command:
+
+    npm run deploy
+
+### Development
+
+To develop the code, run this command:
+
+    npm run dev
+
+### Contributions
+
+If you want to contribute, please fork the repo, create an issue or a pull request.
+
+### Acknowledgements
+
+The code is based on the work of the following people:
+
+* [Matthew D. Miller](https://github.com/mattmiller)
+* [Renate B. Dörner](https://github.com/rdoern2)
+
+
+### License
+
+This software is published under the Apache License Version 2.0, please consult the [LICENSE file](LICENSE) for details.

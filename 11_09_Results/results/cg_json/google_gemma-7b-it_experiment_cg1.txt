@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/google_gemma-7b-it_experiment_cg1.py", line 4, in <module>
+    tree = ET.parse("patient.xml")
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/xml/etree/ElementTree.py", line 1204, in parse
+    tree.parse(source, parser)
+  File "/usr/local/lib/python3.12/xml/etree/ElementTree.py", line 558, in parse
+    source = open(source, "rb")
+             ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'patient.xml'

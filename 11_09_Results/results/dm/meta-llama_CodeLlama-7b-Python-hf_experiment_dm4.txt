@@ -1,0 +1,96 @@
+import json
+import sys
+import os
+
+
+def get_json_dict(json_file):
+    with open(json_file) as f:
+        return json.load(f)
+
+
+def write_json_to_file(json_object, json_file):
+    with open(json_file, 'w') as outfile:
+        json.dump(json_object, outfile)
+
+
+def get_patient_from_gekid(json_dict):
+    return json_dict['entry'][0]
+
+
+def get_pat_id_from_patient(patient):
+    return patient['resource']['id']
+
+
+def get_pat_id_from_bundle(bundle):
+    return bundle['entry'][0]['resource']['id']
+
+
+def get_bundle_from_patient(patient):
+    bundle = dict()
+    bundle['resourceType'] = "Bundle"
+    bundle['type'] = "transaction"
+    bundle_entry = dict()
+    bundle_entry['resource'] = patient
+    bundle['entry'] = [bundle_entry]
+    return bundle
+
+
+def get_patient_from_bundle(bundle):
+    return bundle['entry'][0]['resource']
+
+
+def create_patient(pat_id, patient_dict):
+    patient = dict()
+    patient['resourceType'] = "Patient"
+    patient['id'] = pat_id
+    patient['name'] = patient_dict['name']
+    patient['gender'] = patient_dict['gender']
+    patient['birthDate'] = patient_dict['birthDate']
+    patient['address'] = patient_dict['address']
+
+    return patient
+
+
+def create_name_from_patient(patient):
+    name = dict()
+    name['text'] = patient['name']
+    return name
+
+
+def create_gender_from_patient(patient):
+    gender = dict()
+    gender['text'] = patient['gender']
+    return gender
+
+
+def create_birthDate_from_patient(patient):
+    birthDate = dict()
+    birthDate['text'] = patient['birthDate']
+    return birthDate
+
+
+def create_address_from_patient(patient):
+    address = dict()
+    address['text'] = patient['address']
+    return address
+
+
+def create_bundle_from_patient(patient):
+    bundle = dict()
+    bundle['resourceType'] = "Bundle"
+    bundle['type'] = "transaction"
+    bundle_entry = dict()
+    bundle_entry['resource'] = patient
+    bundle['entry'] = [bundle_entry]
+    return bundle
+
+
+if __name__ == '__main__':
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
+
+    json_dict = get_json_dict(input_file)
+    patient = get_patient_from_gekid(json_dict)
+    pat_id = get_pat_id_from_patient(patient)
+    bundle = create_bundle_from_patient(patient)
+    write_json_to_file(bundle, output_file)

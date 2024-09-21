@@ -1,0 +1,20 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "example-patient",
+        "name": [
+          {
+            "family": "Doe",
+            "given": ["John"]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1980-01-01"
+      }
+    }
+  ]
+}

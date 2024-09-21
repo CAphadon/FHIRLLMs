@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/google_gemma-7b-it_experiment_cg5.py", line 1
+    You are a Python Software Engineer and are asked to create a Python programm that turns the content of a xml file into a FHIR json. The input looks like this: 
+        ^^^
+SyntaxError: invalid syntax

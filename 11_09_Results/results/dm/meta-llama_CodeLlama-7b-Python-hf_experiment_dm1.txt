@@ -1,0 +1,676 @@
+from lxml import etree
+import re
+
+import json
+import os
+
+import xml.etree.ElementTree as et
+
+from collections import OrderedDict
+
+#
+#
+#
+# def xml2dict(node):
+#     ret = OrderedDict()
+#     node.attrib.clear()
+#
+#     if node.text is not None and node.text.strip():
+#         node.text = node.text.strip()
+#
+#     if len(node) == 0 and not node.text:
+#         return None
+#
+#     if node.tag.startswith('{'):
+#         tag = re.sub('{.*?}', '', node.tag)
+#     else:
+#         tag = node.tag
+#
+#     if tag in ('ADT_GEKID'):
+#         pass
+#     elif tag in ('Absender'):
+#         ret['Absender'] = xml2dict(node)
+#     elif tag in ('Absender_ID'):
+#         ret['Absender_ID'] = node.text
+#     elif tag in ('Absender_Anschrift'):
+#         ret['Absender_Anschrift'] = node.text
+#     elif tag in ('Absender_Bezeichnung'):
+#         ret['Absender_Bezeichnung'] = node.text
+#     elif tag in ('Absender_Ansprechpartner'):
+#         ret['Absender_Ansprechpartner'] = node.text
+#     elif tag in ('Patient'):
+#         ret['Patient'] = [xml2dict(n) for n in node]
+#     elif tag in ('Patienten_Stammdaten'):
+#         ret['Patienten_Stammdaten'] = xml2dict(node)
+#     elif tag in ('Patienten_Nachname'):
+#         ret['Patienten_Nachname'] = node.text
+#     elif tag in ('Patienten_Vornamen'):
+#         ret['Patienten_Vornamen'] = node.text
+#     elif tag in ('Patienten_Geschlecht'):
+#         ret['Patienten_Geschlecht'] = node.text
+#     elif tag in ('Patienten_Geburtsdatum'):
+#         ret['Patienten_Geburtsdatum'] = node.text
+#     elif tag in ('KrankenversichertenNr'):
+#         ret['KrankenversichertenNr'] = node.text
+#     elif tag in ('KrankenkassenNr'):
+#         ret['KrankenkassenNr'] = node.text
+#     elif tag in ('Menge_Adresse'):
+#         ret['Menge_Adresse'] = [xml2dict(n) for n in node]
+#     elif tag in ('Adresse'):
+#         ret['Adresse'] = xml2dict(node)
+#     elif tag in ('Patienten_Strasse'):
+#         ret['Patienten_Strasse'] = node.text
+#     elif tag in ('Patienten_Land'):
+#         ret['Patienten_Land'] = node.text
+#     elif tag in ('Patienten_PLZ'):
+#         ret['Patienten_PLZ'] = node.text
+#     elif tag in ('Patienten_Ort'):
+#         ret['Patienten_Ort'] = node.text
+#     elif tag in ('Menge_Meldung'):
+#         ret['Menge_Meldung'] = [xml2dict(n) for n in node]
+#     elif tag in ('Meldung'):
+#         ret['Meldung'] = xml2dict(node)
+#     elif tag in ('Meldung_ID'):
+#         ret['Meldung_ID'] = node.text
+#     elif tag in ('Meldebegruendung'):
+#         ret['Meldebegruendung'] = node.text
+#     elif tag in ('Meldeanlass'):
+#         ret['Meldeanlass'] = node.text
+#     elif tag in ('Tumorzuordnung'):
+#         ret['Tumorzuordnung'] = xml2dict(node)
+#     elif tag in ('Tumor_ID'):
+#         ret['Tumor_ID'] = node.text
+#     elif tag in ('Primaertumor_ICD_Code'):
+#         ret['Primaertumor_ICD_Code'] = node.text
+#     elif tag in ('Primaertumor_ICD_Version'):
+#         ret['Primaertumor_ICD_Version'] = node.text
+#     elif tag in ('Diagnosedatum'):
+#         ret['Diagnosedatum'] = node.text
+#     elif tag in ('Seitenlokalisation'):
+#         ret['Seitenlokalisation'] = node.text
+#     elif tag in ('Menge_ST'):
+#         ret['Menge_ST'] = [xml2dict(n) for n in node]
+#     elif tag in ('ST'):
+#         ret['ST'] = xml2dict(node)
+#     elif tag in ('ST_ID'):
+#         ret['ST_ID'] = node.text
+#     elif tag in ('ST_Intention'):
+#         ret['ST_Intention'] = node.text
+#     elif tag in ('ST_Stellung_OP'):
+#         ret['ST_Stellung_OP'] = node.text
+#     elif tag in ('Menge_Bestrahlung'):
+#         ret['Menge_Bestrahlung'] = [xml2dict(n) for n in node]
+#     elif tag in ('Bestrahlung'):
+#         ret['Bestrahlung'] = xml2dict(node)
+#     elif tag in ('ST_Zielgebiet'):
+#         ret['ST_Zielgebiet'] = node.text
+#     elif tag in ('ST_Seite_Zielgebiet'):
+#         ret['ST_Seite_Zielgebiet'] = node.text
+#     elif tag in ('ST_Ende_Datum'):
+#         ret['ST_Ende_Datum'] = node.text
+#     elif tag in ('ST_Ende_Grund'):
+#         ret['ST_Ende_Grund'] = node.text
+#     elif tag in ('Menge_Nebenwirkung'):
+#         ret['Menge_Nebenwirkung'] = [xml2dict(n) for n in node]
+#     elif tag in ('ST_Nebenwirkung'):
+#         ret['ST_Nebenwirkung'] = xml2dict(node)
+#     elif tag in ('Nebenwirkung_Grad'):
+#         ret['Nebenwirkung_Grad'] = node.text
+#     elif tag in ('Menge_Melder'):
+#         ret['Menge_Melder'] = [xml2dict(n) for n in node]
+#     elif tag in ('Melder'):
+#         ret['Melder'] = xml2dict(node)
+#     elif tag in ('Meldende_Stelle'):
+#         ret['Meldende_Stelle'] = node.text
+#     else:
+#         print(f"Unknown tag: {tag}")
+#         raise ValueError(f"Unknown tag {tag} with text '{node.text}'")
+#
+#     return ret
+#
+#
+# #
+# #
+# #
+# def convert_xml_to_fhir(xml):
+#     tree = etree.XML(xml.encode('utf-8'))
+#     return xml2dict(tree)
+#
+#
+# #
+# #
+# #
+# def convert_xml_to_fhir_json(xml):
+#     tree = etree.XML(xml.encode('utf-8'))
+#     ret = xml2dict(tree)
+#     return json.dumps(ret, indent=2)
+#
+
+
+
+
+
+def xml2dict(node):
+    ret = OrderedDict()
+    node.attrib.clear()
+
+    if node.text is not None and node.text.strip():
+        node.text = node.text.strip()
+
+    if len(node) == 0 and not node.text:
+        return None
+
+    if node.tag.startswith('{http://www.gekid.de/namespace}'):
+        tag = re.sub('{http://www.gekid.de/namespace}', '', node.tag)
+    else:
+        tag = node.tag
+
+    if not tag:
+        return node.text
+    elif tag in ('ADT_GEKID'):
+        pass
+    elif tag in ('Absender'):
+        ret['Absender'] = xml2dict(node)
+    elif tag in ('Absender_ID'):
+        ret['Absender_ID'] = node.text
+    elif tag in ('Absender_Anschrift'):
+        ret['Absender_Anschrift'] = node.text
+    elif tag in ('Absender_Bezeichnung'):
+        ret['Absender_Bezeichnung'] = node.text
+    elif tag in ('Absender_Ansprechpartner'):
+        ret['Absender_Ansprechpartner'] = node.text
+    elif tag in ('Patient'):
+        ret['Patient'] = [xml2dict(n) for n in node]
+    elif tag in ('Patienten_Stammdaten'):
+        ret['Patienten_Stammdaten'] = xml2dict(node)
+    elif tag in ('Patienten_Nachname'):
+        ret['Patienten_Nachname'] = node.text
+    elif tag in ('Patienten_Vornamen'):
+        ret['Patienten_Vornamen'] = node.text
+    elif tag in ('Patienten_Geschlecht'):
+        ret['Patienten_Geschlecht'] = node.text
+    elif tag in ('Patienten_Geburtsdatum'):
+        ret['Patienten_Geburtsdatum'] = node.text
+    elif tag in ('KrankenversichertenNr'):
+        ret['KrankenversichertenNr'] = node.text
+    elif tag in ('KrankenkassenNr'):
+        ret['KrankenkassenNr'] = node.text
+    elif tag in ('Menge_Adresse'):
+        ret['Menge_Adresse'] = [xml2dict(n) for n in node]
+    elif tag in ('Adresse'):
+        ret['Adresse'] = xml2dict(node)
+    elif tag in ('Patienten_Strasse'):
+        ret['Patienten_Strasse'] = node.text
+    elif tag in ('Patienten_Land'):
+        ret['Patienten_Land'] = node.text
+    elif tag in ('Patienten_PLZ'):
+        ret['Patienten_PLZ'] = node.text
+    elif tag in ('Patienten_Ort'):
+        ret['Patienten_Ort'] = node.text
+    elif tag in ('Menge_Meldung'):
+        ret['Menge_Meldung'] = [xml2dict(n) for n in node]
+    elif tag in ('Meldung'):
+        ret['Meldung'] = xml2dict(node)
+    elif tag in ('Meldung_ID'):
+        ret['Meldung_ID'] = node.text
+    elif tag in ('Meldebegruendung'):
+        ret['Meldebegruendung'] = node.text
+    elif tag in ('Meldeanlass'):
+        ret['Meldeanlass'] = node.text
+    elif tag in ('Tumorzuordnung'):
+        ret['Tumorzuordnung'] = xml2dict(node)
+    elif tag in ('Tumor_ID'):
+        ret['Tumor_ID'] = node.text
+    elif tag in ('Primaertumor_ICD_Code'):
+        ret['Primaertumor_ICD_Code'] = node.text
+    elif tag in ('Primaertumor_ICD_Version'):
+        ret['Primaertumor_ICD_Version'] = node.text
+    elif tag in ('Diagnosedatum'):
+        ret['Diagnosedatum'] = node.text
+    elif tag in ('Seitenlokalisation'):
+        ret['Seitenlokalisation'] = node.text
+    elif tag in ('Menge_ST'):
+        ret['Menge_ST'] = [xml2dict(n) for n in node]
+    elif tag in ('ST'):
+        ret['ST'] = xml2dict(node)
+    elif tag in ('ST_ID'):
+        ret['ST_ID'] = node.text
+    elif tag in ('ST_Intention'):
+        ret['ST_Intention'] = node.text
+    elif tag in ('ST_Stellung_OP'):
+        ret['ST_Stellung_OP'] = node.text
+    elif tag in ('Menge_Bestrahlung'):
+        ret['Menge_Bestrahlung'] = [xml2dict(n) for n in node]
+    elif tag in ('Bestrahlung'):
+        ret['Bestrahlung'] = xml2dict(node)
+    elif tag in ('ST_Zielgebiet'):
+        ret['ST_Zielgebiet'] = node.text
+    elif tag in ('ST_Seite_Zielgebiet'):
+        ret['ST_Seite_Zielgebiet'] = node.text
+    elif tag in ('ST_Ende_Datum'):
+        ret['ST_Ende_Datum'] = node.text
+    elif tag in ('ST_Ende_Grund'):
+        ret['ST_Ende_Grund'] = node.text
+    elif tag in ('Menge_Nebenwirkung'):
+        ret['Menge_Nebenwirkung'] = [xml2dict(n) for n in node]
+    elif tag in ('ST_Nebenwirkung'):
+        ret['ST_Nebenwirkung'] = xml2dict(node)
+    elif tag in ('Nebenwirkung_Grad'):
+        ret['Nebenwirkung_Grad'] = node.text
+    elif tag in ('Menge_Melder'):
+        ret['Menge_Melder'] = [xml2dict(n) for n in node]
+    elif tag in ('Melder'):
+        ret['Melder'] = xml2dict(node)
+    elif tag in ('Meldende_Stelle'):
+        ret['Meldende_Stelle'] = node.text
+    else:
+        print(f"Unknown tag: {tag}")
+        raise ValueError(f"Unknown tag {tag} with text '{node.text}'")
+
+    return ret
+
+
+#
+#
+#
+def convert_xml_to_fhir(xml):
+    tree = etree.XML(xml.encode('utf-8'))
+    return xml2dict(tree)
+
+
+#
+#
+#
+def convert_xml_to_fhir_json(xml):
+    tree = etree.XML(xml.encode('utf-8'))
+    ret = xml2dict(tree)
+    return json.dumps(ret, indent=2)
+
+
+#
+#
+#
+def get_json_from_xml_fhir(xml):
+    fhir_dict = convert_xml_to_fhir(xml)
+    return json.dumps(fhir_dict, indent=2)
+
+
+#
+#
+#
+def get_json_from_xml_fhir_json(xml):
+    fhir_dict = convert_xml_to_fhir_json(xml)
+    return fhir_dict
+
+
+#
+#
+#
+def get_xml_from_fhir_json(json_str):
+    fhir_dict = json.loads(json_str)
+    xml = etree.tostring(xml2dict(fhir_dict), pretty_print=True).decode('utf-8')
+    return xml
+
+
+#
+#
+#
+def print_xml_fhir_json(json_str):
+    xml_str = get_xml_from_fhir_json(json_str)
+    print(xml_str)
+
+
+def main():
+    #
+    #
+    #
+    #xml = etree.parse("./example.xml")
+    #xml = etree.parse("./example2.xml")
+    #xml = etree.parse("./example3.xml")
+    #xml = etree.parse("./example4.xml")
+    #xml = etree.parse("./example5.xml")
+    #xml = etree.parse("./example6.xml")
+    #xml = etree.parse("./example7.xml")
+    #xml = etree.parse("./example8.xml")
+    #xml = etree.parse("./example9.xml")
+    #xml = etree.parse("./example10.xml")
+    #xml = etree.parse("./example11.xml")
+    #xml = etree.parse("./example12.xml")
+    #xml = etree.parse("./example13.xml")
+    #xml = etree.parse("./example14.xml")
+    #xml = etree.parse("./example15.xml")
+    #xml = etree.parse("./example16.xml")
+    #xml = etree.parse("./example17.xml")
+    #xml = etree.parse("./example18.xml")
+    #xml = etree.parse("./example19.xml")
+    #xml = etree.parse("./example20.xml")
+    #xml = etree.parse("./example21.xml")
+    #xml = etree.parse("./example22.xml")
+    #xml = etree.parse("./example23.xml")
+    #xml = etree.parse("./example24.xml")
+    #xml = etree.parse("./example25.xml")
+    #xml = etree.parse("./example26.xml")
+    #xml = etree.parse("./example27.xml")
+    #xml = etree.parse("./example28.xml")
+    #xml = etree.parse("./example29.xml")
+    #xml = etree.parse("./example30.xml")
+    #xml = etree.parse("./example31.xml")
+    #xml = etree.parse("./example32.xml")
+    #xml = etree.parse("./example33.xml")
+    #xml = etree.parse("./example34.xml")
+    #xml = etree.parse("./example35.xml")
+    #xml = etree.parse("./example36.xml")
+    #xml = etree.parse("./example37.xml")
+    #xml = etree.parse("./example38.xml")
+    #xml = etree.parse("./example39.xml")
+    #xml = etree.parse("./example40.xml")
+    #xml = etree.parse("./example41.xml")
+    #xml = etree.parse("./example42.xml")
+    #xml = etree.parse("./example43.xml")
+    #xml = etree.parse("./example44.xml")
+    #xml = etree.parse("./example45.xml")
+    #xml = etree.parse("./example46.xml")
+    #xml = etree.parse("./example47.xml")
+    #xml = etree.parse("./example48.xml")
+    #xml = etree.parse("./example49.xml")
+    #xml = etree.parse("./example50.xml")
+    #xml = etree.parse("./example51.xml")
+    #xml = etree.parse("./example52.xml")
+    #xml = etree.parse("./example53.xml")
+    #xml = etree.parse("./example54.xml")
+    #xml = etree.parse("./example55.xml")
+    #xml = etree.parse("./example56.xml")
+    #xml = etree.parse("./example57.xml")
+    #xml = etree.parse("./example58.xml")
+    #xml = etree.parse("./example59.xml")
+    #xml = etree.parse("./example60.xml")
+    #xml = etree.parse("./example61.xml")
+    #xml = etree.parse("./example62.xml")
+    #xml = etree.parse("./example63.xml")
+    #xml = etree.parse("./example64.xml")
+    #xml = etree.parse("./example65.xml")
+    #xml = etree.parse("./example66.xml")
+    #xml = etree.parse("./example67.xml")
+    #xml = etree.parse("./example68.xml")
+    #xml = etree.parse("./example69.xml")
+    #xml = etree.parse("./example70.xml")
+    #xml = etree.parse("./example71.xml")
+    #xml = etree.parse("./example72.xml")
+    #xml = etree.parse("./example73.xml")
+    #xml = etree.parse("./example74.xml")
+    #xml = etree.parse("./example75.xml")
+    #xml = etree.parse("./example76.xml")
+    #xml = etree.parse("./example77.xml")
+    #xml = etree.parse("./example78.xml")
+    #xml = etree.parse("./example79.xml")
+    #xml = etree.parse("./example80.xml")
+    #xml = etree.parse("./example81.xml")
+    #xml = etree.parse("./example82.xml")
+    #xml = etree.parse("./example83.xml")
+    #xml = etree.parse("./example84.xml")
+    #xml = etree.parse("./example85.xml")
+    #xml = etree.parse("./example86.xml")
+    #xml = etree.parse("./example87.xml")
+    #xml = etree.parse("./example88.xml")
+    #xml = etree.parse("./example89.xml")
+    #xml = etree.parse("./example90.xml")
+    #xml = etree.parse("./example91.xml")
+    #xml = etree.parse("./example92.xml")
+    #xml = etree.parse("./example93.xml")
+    #xml = etree.parse("./example94.xml")
+    #xml = etree.parse("./example95.xml")
+    #xml = etree.parse("./example96.xml")
+    #xml = etree.parse("./example97.xml")
+    #xml = etree.parse("./example98.xml")
+    #xml = etree.parse("./example99.xml")
+    #xml = etree.parse("./example100.xml")
+    #xml = etree.parse("./example101.xml")
+    #xml = etree.parse("./example102.xml")
+    #xml = etree.parse("./example103.xml")
+    #xml = etree.parse("./example104.xml")
+    #xml = etree.parse("./example105.xml")
+    #xml = etree.parse("./example106.xml")
+    #xml = etree.parse("./example107.xml")
+    #xml = etree.parse("./example108.xml")
+    #xml = etree.parse("./example109.xml")
+    #xml = etree.parse("./example110.xml")
+    #xml = etree.parse("./example111.xml")
+    #xml = etree.parse("./example112.xml")
+    #xml = etree.parse("./example113.xml")
+    #xml = etree.parse("./example114.xml")
+    #xml = etree.parse("./example115.xml")
+    #xml = etree.parse("./example116.xml")
+    #xml = etree.parse("./example117.xml")
+    #xml = etree.parse("./example118.xml")
+    #xml = etree.parse("./example119.xml")
+    #xml = etree.parse("./example120.xml")
+    #xml = etree.parse("./example121.xml")
+    #xml = etree.parse("./example122.xml")
+    #xml = etree.parse("./example123.xml")
+    #xml = etree.parse("./example124.xml")
+    #xml = etree.parse("./example125.xml")
+    #xml = etree.parse("./example126.xml")
+    #xml = etree.parse("./example127.xml")
+    #xml = etree.parse("./example128.xml")
+    #xml = etree.parse("./example129.xml")
+    #xml = etree.parse("./example130.xml")
+    #xml = etree.parse("./example131.xml")
+    #xml = etree.parse("./example132.xml")
+    #xml = etree.parse("./example133.xml")
+    #xml = etree.parse("./example134.xml")
+    #xml = etree.parse("./example135.xml")
+    #xml = etree.parse("./example136.xml")
+    #xml = etree.parse("./example137.xml")
+    #xml = etree.parse("./example138.xml")
+    #xml = etree.parse("./example139.xml")
+    #xml = etree.parse("./example140.xml")
+    #xml = etree.parse("./example141.xml")
+    #xml = etree.parse("./example142.xml")
+    #xml = etree.parse("./example143.xml")
+    #xml = etree.parse("./example144.xml")
+    #xml = etree.parse("./example145.xml")
+    #xml = etree.parse("./example146.xml")
+    #xml = etree.parse("./example147.xml")
+    #xml = etree.parse("./example148.xml")
+    #xml = etree.parse("./example149.xml")
+    #xml = etree.parse("./example150.xml")
+    #xml = etree.parse("./example151.xml")
+    #xml = etree.parse("./example152.xml")
+    #xml = etree.parse("./example153.xml")
+    #xml = etree.parse("./example154.xml")
+    #xml = etree.parse("./example155.xml")
+    #xml = etree.parse("./example156.xml")
+    #xml = etree.parse("./example157.xml")
+    #xml = etree.parse("./example158.xml")
+    #xml = etree.parse("./example159.xml")
+    #xml = etree.parse("./example160.xml")
+    #xml = etree.parse("./example161.xml")
+    #xml = etree.parse("./example162.xml")
+    #xml = etree.parse("./example163.xml")
+    #xml = etree.parse("./example164.xml")
+    #xml = etree.parse("./example165.xml")
+    #xml = etree.parse("./example166.xml")
+    #xml = etree.parse("./example167.xml")
+    #xml = etree.parse("./example168.xml")
+    #xml = etree.parse("./example169.xml")
+    #xml = etree.parse("./example170.xml")
+    #xml = etree.parse("./example171.xml")
+    #xml = etree.parse("./example172.xml")
+    #xml = etree.parse("./example173.xml")
+    #xml = etree.parse("./example174.xml")
+    #xml = etree.parse("./example175.xml")
+    #xml = etree.parse("./example176.xml")
+    #xml = etree.parse("./example177.xml")
+    #xml = etree.parse("./example178.xml")
+    #xml = etree.parse("./example179.xml")
+    #xml = etree.parse("./example180.xml")
+    #xml = etree.parse("./example181.xml")
+    #xml = etree.parse("./example182.xml")
+    #xml = etree.parse("./example183.xml")
+    #xml = etree.parse("./example184.xml")
+    #xml = etree.parse("./example185.xml")
+    #xml = etree.parse("./example186.xml")
+    #xml = etree.parse("./example187.xml")
+    #xml = etree.parse("./example188.xml")
+    #xml = etree.parse("./example189.xml")
+    #xml = etree.parse("./example190.xml")
+    #xml = etree.parse("./example191.xml")
+    #xml = etree.parse("./example192.xml")
+    #xml = etree.parse("./example193.xml")
+    #xml = etree.parse("./example194.xml")
+    #xml = etree.parse("./example195.xml")
+    #xml = etree.parse("./example196.xml")
+    #xml = etree.parse("./example197.xml")
+    #xml = etree.parse("./example198.xml")
+    #xml = etree.parse("./example199.xml")
+    #xml = etree.parse("./example200.xml")
+    #xml = etree.parse("./example201.xml")
+    #xml = etree.parse("./example202.xml")
+    #xml = etree.parse("./example203.xml")
+    #xml = etree.parse("./example204.xml")
+    #xml = etree.parse("./example205.xml")
+    #xml = etree.parse("./example206.xml")
+    #xml = etree.parse("./example207.xml")
+    #xml = etree.parse("./example208.xml")
+    #xml = etree.parse("./example209.xml")
+    #xml = etree.parse("./example210.xml")
+    #xml = etree.parse("./example211.xml")
+    #xml = etree.parse("./example212.xml")
+    #xml = etree.parse("./example213.xml")
+    #xml = etree.parse("./example214.xml")
+    #xml = etree.parse("./example215.xml")
+    #xml = etree.parse("./example216.xml")
+    #xml = etree.parse("./example217.xml")
+    #xml = etree.parse("./example218.xml")
+    #xml = etree.parse("./example219.xml")
+    #xml = etree.parse("./example220.xml")
+    #xml = etree.parse("./example221.xml")
+    #xml = etree.parse("./example222.xml")
+    #xml = etree.parse("./example223.xml")
+    #xml = etree.parse("./example224.xml")
+    #xml = etree.parse("./example225.xml")
+    #xml = etree.parse("./example226.xml")
+    #xml = etree.parse("./example227.xml")
+    #xml = etree.parse("./example228.xml")
+    #xml = etree.parse("./example229.xml")
+    #xml = etree.parse("./example230.xml")
+    #xml = etree.parse("./example231.xml")
+    #xml = etree.parse("./example232.xml")
+    #xml = etree.parse("./example233.xml")
+    #xml = etree.parse("./example234.xml")
+    #xml = etree.parse("./example235.xml")
+    #xml = etree.parse("./example236.xml")
+    #xml = etree.parse("./example237.xml")
+    #xml = etree.parse("./example238.xml")
+    #xml = etree.parse("./example239.xml")
+    #xml = etree.parse("./example240.xml")
+    #xml = etree.parse("./example241.xml")
+    #xml = etree.parse("./example242.xml")
+    #xml = etree.parse("./example243.xml")
+    #xml = etree.parse("./example244.xml")
+    #xml = etree.parse("./example245.xml")
+    #xml = etree.parse("./example246.xml")
+    #xml = etree.parse("./example247.xml")
+    #xml = etree.parse("./example248.xml")
+    #xml = etree.parse("./example249.xml")
+    #xml = etree.parse("./example250.xml")
+    #xml = etree.parse("./example251.xml")
+    #xml = etree.parse("./example252.xml")
+    #xml = etree.parse("./example253.xml")
+    #xml = etree.parse("./example254.xml")
+    #xml = etree.parse("./example255.xml")
+    #xml = etree.parse("./example256.xml")
+    #xml = etree.parse("./example257.xml")
+    #xml = etree.parse("./example258.xml")
+    #xml = etree.parse("./example259.xml")
+    #xml = etree.parse("./example260.xml")
+    #xml = etree.parse("./example261.xml")
+    #xml = etree.parse("./example262.xml")
+    #xml = etree.parse("./example263.xml")
+    #xml = etree.parse("./example264.xml")
+    #xml = etree.parse("./example265.xml")
+    #xml = etree.parse("./example266.xml")
+    #xml = etree.parse("./example267.xml")
+    #xml = etree.parse("./example268.xml")
+    #xml = etree.parse("./example269.xml")
+    #xml = etree.parse("./example270.xml")
+    #xml = etree.parse("./example271.xml")
+    #xml = etree.parse("./example272.xml")
+    #xml = etree.parse("./example273.xml")
+    #xml = etree.parse("./example274.xml")
+    #xml = etree.parse("./example275.xml")
+    #xml = etree.parse("./example276.xml")
+    #xml = etree.parse("./example277.xml")
+    #xml = etree.parse("./example278.xml")
+    #xml = etree.parse("./example279.xml")
+    #xml = etree.parse("./example280.xml")
+    #xml = etree.parse("./example281.xml")
+    #xml = etree.parse("./example282.xml")
+    #xml = etree.parse("./example283.xml")
+    #xml = etree.parse("./example284.xml")
+    #xml = etree.parse("./example285.xml")
+    #xml = etree.parse("./example286.xml")
+    #xml = etree.parse("./example287.xml")
+    #xml = etree.parse("./example288.xml")
+    #xml = etree.parse("./example289.xml")
+    #xml = etree.parse("./example290.xml")
+    #xml = etree.parse("./example291.xml")
+    #xml = etree.parse("./example292.xml")
+    #xml = etree.parse("./example293.xml")
+    #xml = etree.parse("./example294.xml")
+    #xml = etree.parse("./example295.xml")
+    #xml = etree.parse("./example296.xml")
+    #xml = etree.parse("./example297.xml")
+    #xml = etree.parse("./example298.xml")
+    #xml = etree.parse("./example299.xml")
+    #xml = etree.parse("./example300.xml")
+    #xml = etree.parse("./example301.xml")
+    #xml = etree.parse("./example302.xml")
+    #xml = etree.parse("./example303.xml")
+    #xml = etree.parse("./example304.xml")
+    #xml = etree.parse("./example305.xml")
+    #xml = etree.parse("./example306.xml")
+    #xml = etree.parse("./example307.xml")
+    #xml = etree.parse("./example308.xml")
+    #xml = etree.parse("./example309.xml")
+    #xml = etree.parse("./example310.xml")
+    #xml = etree.parse("./example311.xml")
+    #xml = etree.parse("./example312.xml")
+    #xml = etree.parse("./example313.xml")
+    #xml = etree.parse("./example314.xml")
+    #xml = etree.parse("./example315.xml")
+    #xml = etree.parse("./example316.xml")
+    #xml = etree.parse("./example317.xml")
+    #xml = etree.parse("./example318.xml")
+    #xml = etree.parse("./example319.xml")
+    #xml = etree.parse("./example320.xml")
+    #xml = etree.parse("./example321.xml")
+    #xml = etree.parse("./example322.xml")
+    #xml = etree.parse("./example323.xml")
+    #xml = etree.parse("./example324.xml")
+    #xml = etree.parse("./example325.xml")
+    #xml = etree.parse("./example326.xml")
+    #xml = etree.parse("./example327.xml")
+    #xml = etree.parse("./example328.xml")
+    #xml = etree.parse("./example329.xml")
+    #xml = etree.parse("./example330.xml")
+    #xml = etree.parse("./example331.xml")
+    #xml = etree.parse("./example332.xml")
+    #xml = etree.parse("./example333.xml")
+    #xml = etree.parse("./example334.xml")
+    #xml = etree.parse("./example335.xml")
+    #xml = etree.parse("./example336.xml")
+    #xml = etree.parse("./example337.xml")
+    #xml = etree.parse("./example338.xml")
+    #xml = etree.parse("./example339.xml")
+    #xml = etree.parse("./example340.xml")
+    #xml = etree.parse("./example341.xml")
+    #xml = etree.parse("./example342.xml")
+    #xml = etree.parse("./example343.xml")
+    #xml = etree.parse("./example344.xml")
+    #xml = etree.parse("./example345.xml")
+    #xml = etree.parse("./example346.xml")
+    #xml = etree.parse("./example347.xml")
+    #xml = etree.parse("./example348.xml")
+    #xml = etree.parse("./example349.xml")
+    #xml = etree.parse("./example3

@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/WizardLMTeam_WizardCoder-Python-13B-V1_0_experiment_cg1.py", line 27
+    "gender": xml_data.find(".//ns0:Patienten_Geschlecht", {'ns0': 'http://www.gekid.de/namespace').text,
+                                                                                                  ^
+SyntaxError: closing parenthesis ')' does not match opening parenthesis '{'

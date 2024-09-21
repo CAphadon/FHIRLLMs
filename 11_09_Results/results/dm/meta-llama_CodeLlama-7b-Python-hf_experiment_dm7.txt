@@ -1,0 +1,82 @@
+Create a FHIR json that is a bundle containing a Patient.県(Prefecture), 市(City), 区(District)
+    """
+    bundle = {}
+    bundle['resourceType'] = 'bundle'
+    bundle['type'] = 'collection'
+    bundle['entry'] = []
+    patient = {}
+    patient['resourceType'] = 'Patient'
+    patient['identifier'] = [{
+       'system': 'http://www.pref.ehime.jp/pages/shigoto/kouzou/data.html',
+        'value': '224'
+    }]
+    patient['name'] = []
+    patient['name'].append({
+        'family': 'テスト',
+        'given': ['太郎']
+    })
+    patient['gender'] ='male'
+    patient['birthDate'] = '1976-09-15'
+    patient['address'] = [{
+        'text': '埼玉県大月郡大月町'
+    }]
+    patient['contact'] = []
+    patient['contact'].append({
+       'system': 'phone',
+        'value': '09012345678'
+    })
+    bundle['entry'].append({
+       'resource': patient,
+       'search': {
+           'mode':'match'
+        }
+    })
+    print(json.dumps(bundle, indent=4, ensure_ascii=False))
+    return(bundle)
+
+
+def _create_fhir_json_test(
+        prefecture: str, city: str, district: str,
+        prefecture_kana: str, city_kana: str, district_kana: str,
+        prefecture_eng: str, city_eng: str, district_eng: str,
+        postal_code: str, prefecture_code: str, prefecture_number: str,
+        city_code: str, city_number: str, district_code: str,
+        district_number: str, ku_code: str, ku_number: str,
+        ku_name: str, ku_name_kana: str, ku_name_eng: str,
+        ku_name_en_kana: str, ku_name_eng_kana: str) -> dict:
+    """
+    Create a FHIR json that is a bundle containing a Patient.県(Prefecture), 市(City), 区(District)
+    """
+    bundle = {}
+    bundle['resourceType'] = 'bundle'
+    bundle['type'] = 'collection'
+    bundle['entry'] = []
+    patient = {}
+    patient['resourceType'] = 'Patient'
+    patient['identifier'] = [{
+       'system': 'http://www.pref.ehime.jp/pages/shigoto/kouzou/data.html',
+        'value': '224'
+    }]
+    patient['name'] = []
+    patient['name'].append({
+        'family': 'テスト',
+        'given': ['太郎']
+    })
+    patient['gender'] ='male'
+    patient['birthDate'] = '1976-09-15'
+    patient['address'] = [{
+        'text': '埼玉県大月郡大月町'
+    }]
+    patient['contact'] = []
+    patient['contact'].append({
+       'system': 'phone',
+        'value': '09012345678'
+    })
+    bundle['entry'].append({
+       'resource': patient,
+       'search': {
+           'mode':'match'
+        }
+    })
+    print(json.dumps(bundle, indent=4, ensure_ascii=False))
+    return(bundle)

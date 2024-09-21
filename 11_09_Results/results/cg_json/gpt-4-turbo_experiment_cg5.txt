@@ -1,0 +1,43 @@
+{
+    "resourceType": "Bundle",
+    "type": "transaction",
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "Patient",
+                "id": "123456789",
+                "identifier": [
+                    {
+                        "use": "official",
+                        "value": "Q123456"
+                    },
+                    {
+                        "use": "secondary",
+                        "value": "555555"
+                    }
+                ],
+                "name": [
+                    {
+                        "family": "Max",
+                        "given": [
+                            "Mustermann"
+                        ]
+                    }
+                ],
+                "gender": "male",
+                "birthDate": "02-04-2023",
+                "address": [
+                    {
+                        "use": "home",
+                        "line": [
+                            "Bahnhofstr. 1"
+                        ],
+                        "city": "Tuebingen",
+                        "postalCode": "70070",
+                        "country": "DE"
+                    }
+                ]
+            }
+        }
+    ]
+}

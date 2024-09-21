@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg2.py", line 116, in <module>
+    main()
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg2.py", line 110, in main
+    patient_data = xml_to_dict(ET.fromstring(xml_data))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg2.py", line 13, in xml_to_dict
+    dict_[key] = [xml_to_dict(child) for child in children]
+                  ^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg2.py", line 13, in xml_to_dict
+    dict_[key] = [xml_to_dict(child) for child in children]
+                  ^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg2.py", line 15, in xml_to_dict
+    dict_[key] = xml_node.text
+          ^^^
+UnboundLocalError: cannot access local variable 'key' where it is not associated with a value

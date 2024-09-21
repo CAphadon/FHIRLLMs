@@ -1,0 +1,198 @@
+To convert the given input XML to a FHIR JSON format, we need to map the XML fields to the corresponding FHIR resources and elements. Below is the FHIR JSON representation corresponding to the provided XML input:
+
+```json
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "Patient/123456789",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "123456789",
+        "meta": {
+          "source": "22222244.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert"
+          ]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                  "code": "PSEUDED"
+                },
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR",
+                  "display": "Medical record number"
+                }
+              ]
+            },
+            "system": "https://fhir.diz.uk-erlangen.de/identifiers/patient-id",
+            "value": "123456789"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "2023-04-02",
+        "address": [
+          {
+            "type": "both",
+            "line": ["Bahnhofstr. 1"],
+            "city": "Tuebingen",
+            "postalCode": "70070",
+            "country": "DE"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Patient/123456789"
+      }
+    },
+    {
+      "fullUrl": "Observation/ST0001238",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "ST0001238",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "ST",
+              "display": "Meldung"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/123456789"
+        },
+        "effectiveDateTime": "2021-11-10",
+        "valueString": "behandlungsende",
+        "note": [
+          {
+            "text": "I"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/ST0001238"
+      }
+    },
+    {
+      "fullUrl": "Condition/1",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "1",
+        "subject": {
+          "reference": "Patient/123456789"
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10",
+              "code": "C72.0",
+              "display": "Malignant neoplasm of spinal cord"
+            }
+          ]
+        },
+        "recordedDate": "2021-05-18",
+        "note": [
+          {
+            "text": "Seitenlokalisation: R"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Condition/1"
+      }
+    },
+    {
+      "fullUrl": "Procedure/45900",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "45900",
+        "subject": {
+          "reference": "Patient/123456789"
+        },
+        "status": "completed",
+        "category": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "367336001",
+              "display": "Therapeutic procedure"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "P",
+              "display": "Therapeutic procedure"
+            }
+          ]
+        },
+        "performedPeriod": {
+          "end": "2021-12-02"
+        },
+        "note": [
+          {
+            "text": "Ende Grund: L"
+          }
+        ],
+        "complicationDetail": [
+          {
+            "reference": "Observation/Complication/4"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Procedure/45900"
+      }
+    },
+    {
+      "fullUrl": "Observation/Complication/4",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "4",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "Complication",
+              "display": "Complication"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/123456789"
+        },
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "4",
+              "display": "Severity 4"
+            }
+          ]
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/Complication/4"
+      }
+    }
+  ]
+}
+```
+
+This FHIR JSON bundle contains resources for the Patient, Observation (Meldung), Condition (Tumor), Procedure (ST), and Observation (Complication), mapping as closely as possible to the original XML structure. Adjustments can be made according to specific requirements or additional FHIR resource details.

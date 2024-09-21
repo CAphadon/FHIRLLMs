@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg4.py", line 3, in <module>
+    from fhir.resources.patient import Patient, Name, Telecom, Address, ContactPoint
+ImportError: cannot import name 'Name' from 'fhir.resources.patient' (/home/ubuntu/.local/lib/python3.12/site-packages/fhir/resources/patient.py)

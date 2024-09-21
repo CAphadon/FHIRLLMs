@@ -1,0 +1,51 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "Patient/6820d911f972fb4dcd248831b0092abfd5685638",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "6820d911f972fb4dcd248831b0092abfd5685638",
+        "meta": {
+          "source": "999999.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert"
+          ]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                  "code": "PSEUDED"
+                },
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR",
+                  "display": "Medical record number"
+                }
+              ]
+            },
+            "system": "https://fhir.diz.uk-erlangen.de/identifiers/patient-id",
+            "value": "1055555888"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1900-09",
+        "address": [
+          {
+            "type": "both",
+            "postalCode": "91000",
+            "country": "DE"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Patient/6820d911f972fb4dcd248831b0092abfd5685638"
+      }
+    }
+  ]
+}

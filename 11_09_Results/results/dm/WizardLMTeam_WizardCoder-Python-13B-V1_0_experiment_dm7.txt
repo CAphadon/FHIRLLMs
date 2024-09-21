@@ -1,0 +1,819 @@
+    fhir_patient = Patient(
+        id=str(uuid.uuid4()),
+        name=[HumanName(given=["Test"], family="Patient")],
+        gender="male",
+        birthDate="1970-01-01",
+    )
+
+    fhir_bundle = Bundle(
+        type="transaction",
+        entry=[BundleEntry(request=BundleEntryRequest(method="POST", url="/Patient"), resource=fhir_patient)],
+    )
+
+    return fhir_bundle
+
+
+def test_fhir_bundle_json_to_dict_conversion():
+    """
+    Test converting a FHIR Bundle to a dictionary and back.
+    """
+    fhir_bundle = create_example_fhir_bundle()
+
+    fhir_dict = fhir_bundle.dict()
+
+    assert "Bundle" in fhir_dict
+    assert "type" in fhir_dict["Bundle"]
+    assert fhir_dict["Bundle"]["type"] == "transaction"
+
+    assert "entry" in fhir_dict["Bundle"]
+    assert len(fhir_dict["Bundle"]["entry"]) == 1
+    assert fhir_dict["Bundle"]["entry"][0]["request"]["method"] == "POST"
+    assert fhir_dict["Bundle"]["entry"][0]["request"]["url"] == "/Patient"
+    assert fhir_dict["Bundle"]["entry"][0]["resource"]["resourceType"] == "Patient"
+    assert fhir_dict["Bundle"]["entry"][0]["resource"]["id"] is not None
+    assert fhir_dict["Bundle"]["entry"][0]["resource"]["name"][0]["given"] == ["Test"]
+    assert fhir_dict["Bundle"]["entry"][0]["resource"]["name"][0]["family"] == "Patient"
+    assert fhir_dict["Bundle"]["entry"][0]["resource"]["gender"] == "male"
+    assert fhir_dict["Bundle"]["entry"][0]["resource"]["birthDate"] == "1970-01-01"
+
+    fhir_json = json.dumps(fhir_dict)
+
+    fhir_bundle_from_dict = Bundle.parse_obj(json.loads(fhir_json))
+
+    assert fhir_bundle_from_dict == fhir_bundle
+
+def test_fhir_bundle_json_to_xml_conversion():
+    """
+    Test converting a FHIR Bundle to XML and back.
+    """
+    fhir_bundle = create_example_fhir_bundle()
+
+    fhir_json = json.dumps(fhir_bundle.dict())
+
+    fhir_xml = fhir_json_to_xml(fhir_json)
+
+    fhir_bundle_from_xml = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle_from_dict = Bundle.parse_obj(json.loads(fhir_bundle_from_xml))
+
+    assert fhir_bundle_from_dict == fhir_bundle
+
+def test_fhir_bundle_xml_to_json_conversion():
+    """
+    Test converting a FHIR Bundle to XML and back.
+    """
+    fhir_bundle = create_example_fhir_bundle()
+
+    fhir_xml = fhir_bundle.json(by_alias=True)
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle_from_json = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle_from_json == fhir_bundle
+
+def test_fhir_bundle_json_to_xml_string_conversion():
+    """
+    Test converting a FHIR Bundle to XML and back.
+    """
+    fhir_bundle = create_example_fhir_bundle()
+
+    fhir_json = fhir_bundle.json(by_alias=True, indent=2)
+
+    fhir_xml = fhir_json_to_xml(fhir_json)
+
+    assert "<?xml version" in fhir_xml
+    assert "<Bundle>" in fhir_xml
+    assert "<type value=\"transaction\"/>" in fhir_xml
+    assert "<entry>" in fhir_xml
+    assert "<Patient>" in fhir_xml
+    assert "<name>" in fhir_xml
+    assert "<given>Test</given>" in fhir_xml
+    assert "<family>Patient</family>" in fhir_xml
+    assert "<gender value=\"male\"/>" in fhir_xml
+    assert "<birthDate value=\"1970-01-01\"/>" in fhir_xml
+
+    fhir_bundle_from_xml = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle_from_dict = Bundle.parse_obj(json.loads(fhir_bundle_from_xml))
+
+    assert fhir_bundle_from_dict == fhir_bundle
+
+def test_fhir_xml_to_json_conversion():
+    """
+    Test converting a FHIR XML to a JSON string and back.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given>Test</given>
+                        <family>Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01"/>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+
+    fhir_json = fhir_bundle.json(by_alias=True)
+
+    fhir_xml_from_dict = fhir_json_to_xml(fhir_json)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion():
+    """
+    Test converting a FHIR XML to a JSON string and back.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given>Test</given>
+                        <family>Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01"/>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_array():
+    """
+    Test converting a FHIR XML to a JSON string and back with an array.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given>Test</given>
+                        <family>Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01"/>
+                    <name>
+                        <given>Test2</given>
+                        <family>Patient2</family>
+                    </name>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient"
+    assert fhir_bundle.entry[0].resource.name[1].given == ["Test2"]
+    assert fhir_bundle.entry[0].resource.name[1].family == "Patient2"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_array_and_attributes():
+    """
+    Test converting a FHIR XML to a JSON string and back with an array and attributes.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given value="Test">Test1</given>
+                        <family value="Patient1">Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01">1970-01-01</birthDate>
+                    <name>
+                        <given value="Test2">Test2</given>
+                        <family value="Patient2">Patient2</family>
+                    </name>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test1"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient1"
+    assert fhir_bundle.entry[0].resource.name[1].given == ["Test2"]
+    assert fhir_bundle.entry[0].resource.name[1].family == "Patient2"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_multiple_arrays():
+    """
+    Test converting a FHIR XML to a JSON string and back with multiple arrays.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given>Test</given>
+                        <family>Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01"/>
+                    <address>
+                        <line>Test street</line>
+                        <line>Test city</line>
+                    </address>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+    assert fhir_bundle.entry[0].resource.address[0].line == ["Test street", "Test city"]
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_multiple_arrays_and_attributes():
+    """
+    Test converting a FHIR XML to a JSON string and back with multiple arrays and attributes.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given value="Test">Test1</given>
+                        <family value="Patient1">Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01">1970-01-01</birthDate>
+                    <address>
+                        <line value="Test street">Test street1</line>
+                        <line value="Test city">Test city1</line>
+                    </address>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test1"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient1"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+    assert fhir_bundle.entry[0].resource.address[0].line == ["Test street1", "Test city1"]
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_nested_array():
+    """
+    Test converting a FHIR XML to a JSON string and back with a nested array.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given>Test</given>
+                        <family>Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01"/>
+                    <maritalStatus>
+                        <coding>
+                            <system value="marital-status"/>
+                            <code value="M"/>
+                            <display value="Married"/>
+                        </coding>
+                    </maritalStatus>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].system == "marital-status"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].code == "M"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].display == "Married"
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_nested_array_and_attributes():
+    """
+    Test converting a FHIR XML to a JSON string and back with a nested array and attributes.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given value="Test">Test1</given>
+                        <family value="Patient1">Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01">1970-01-01</birthDate>
+                    <maritalStatus>
+                        <coding>
+                            <system value="marital-status">marital-status</system>
+                            <code value="M">M</code>
+                            <display value="Married">Married</display>
+                        </coding>
+                    </maritalStatus>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test1"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient1"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].system == "marital-status"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].code == "M"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].display == "Married"
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_empty_array():
+    """
+    Test converting a FHIR XML to a JSON string and back with an empty array.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given>Test</given>
+                        <family>Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01"/>
+                    <address/>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+    assert fhir_bundle.entry[0].resource.address == []
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_empty_array_and_attributes():
+    """
+    Test converting a FHIR XML to a JSON string and back with an empty array and attributes.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given value="Test">Test1</given>
+                        <family value="Patient1">Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01">1970-01-01</birthDate>
+                    <address>
+                        <line value=""/>
+                    </address>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test1"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient1"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+    assert fhir_bundle.entry[0].resource.address == []
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_empty_nested_array():
+    """
+    Test converting a FHIR XML to a JSON string and back with an empty nested array.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given>Test</given>
+                        <family>Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01"/>
+                    <maritalStatus>
+                        <coding>
+                            <system value="marital-status"/>
+                            <code value="M"/>
+                            <display value="Married"/>
+                            <extension/>
+                        </coding>
+                    </maritalStatus>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].system == "marital-status"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].code == "M"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].display == "Married"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].extension == []
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_empty_nested_array_and_attributes():
+    """
+    Test converting a FHIR XML to a JSON string and back with an empty nested array and attributes.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given value="Test">Test1</given>
+                        <family value="Patient1">Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01">1970-01-01</birthDate>
+                    <maritalStatus>
+                        <coding>
+                            <system value="marital-status">marital-status</system>
+                            <code value="M">M</code>
+                            <display value="Married">Married</display>
+                            <extension>
+                                <extension/>
+                            </extension>
+                        </coding>
+                    </maritalStatus>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test1"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient1"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].system == "marital-status"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].code == "M"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].display == "Married"
+    assert fhir_bundle.entry[0].resource.maritalStatus.coding[0].extension == []
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_multiple_empty_arrays():
+    """
+    Test converting a FHIR XML to a JSON string and back with multiple empty arrays.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given>Test</given>
+                        <family>Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01"/>
+                    <telecom/>
+                    <address>
+                        <line/>
+                    </address>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test"]
+    assert fhir_bundle.entry[0].resource.name[0].family == "Patient"
+    assert fhir_bundle.entry[0].resource.gender == "male"
+    assert fhir_bundle.entry[0].resource.birthDate == "1970-01-01"
+    assert fhir_bundle.entry[0].resource.telecom == []
+    assert fhir_bundle.entry[0].resource.address == []
+
+    fhir_xml_from_dict = fhir_bundle.json(by_alias=True)
+
+    assert fhir_xml == fhir_xml_from_dict
+
+def test_fhir_xml_to_json_conversion_with_multiple_empty_arrays_and_attributes():
+    """
+    Test converting a FHIR XML to a JSON string and back with multiple empty arrays and attributes.
+    """
+    fhir_xml = """
+    <Bundle xmlns="http://hl7.org/fhir">
+        <type value="transaction"/>
+        <entry>
+            <request>
+                <method value="POST"/>
+                <url value="/Patient"/>
+            </request>
+            <resource>
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="1"/>
+                    <name>
+                        <given value="Test">Test1</given>
+                        <family value="Patient1">Patient</family>
+                    </name>
+                    <gender value="male"/>
+                    <birthDate value="1970-01-01">1970-01-01</birthDate>
+                    <telecom>
+                        <system value="phone">
+                            <empty-extension/>
+                        </system>
+                    </telecom>
+                    <address>
+                        <line value="">
+                            <empty-extension/>
+                        </line>
+                    </address>
+                </Patient>
+            </resource>
+        </entry>
+    </Bundle>
+    """
+
+    fhir_json = fhir_xml_to_json(fhir_xml)
+
+    fhir_bundle = Bundle.parse_raw(fhir_json)
+
+    assert fhir_bundle.type == "transaction"
+    assert len(fhir_bundle.entry) == 1
+    assert fhir_bundle.entry[0].request.method == "POST"
+    assert fhir_bundle.entry[0].request.url == "/Patient"
+    assert fhir_bundle.entry[0].resource.resourceType == "Patient"
+    assert fhir_bundle.entry[0].resource.id == "1"
+    assert fhir_bundle.entry[0].resource.name[0].given == ["Test1"]
+    assert f

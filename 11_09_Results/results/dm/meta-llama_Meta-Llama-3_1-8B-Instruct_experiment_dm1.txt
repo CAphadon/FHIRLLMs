@@ -1,0 +1,274 @@
+ {
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "Patient/22222244",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "22222244",
+        "meta": {
+          "source": "22222244.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert"
+          ]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                  "code": "PSEUDED"
+                },
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR",
+                  "display": "Medical\u00b7record\u00b7number"
+                }
+              ]
+            },
+            "system": "https://fhir.diz.uk-erlangen.de/identifiers/patient-id",
+            "value": "22222244"
+          }
+        ],
+        "name": [
+          {
+            "family": "UKER",
+            "given": [
+              "UKER"
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "1234567890",
+            "use": "work"
+          }
+        ],
+        "address": [
+          {
+            "line": [
+              "Maximiliansplatz 2"
+            ],
+            "city": "Erlangen",
+            "state": "Bayern",
+            "postalCode": "91054",
+            "country": "DE",
+            "period": {
+              "start": "2021-01-01",
+              "end": "2021-12-31"
+            }
+          }
+        ],
+        "birthDate": "2023-04-02",
+        "gender": "male"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Patient/22222244"
+      }
+    },
+    {
+      "fullUrl": "Patient/123456789",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "123456789",
+        "meta": {
+          "source": "123456789.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert"
+          ]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                  "code": "PSEUDED"
+                },
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR",
+                  "display": "Medical\u00b7record\u00b7number"
+                }
+              ]
+            },
+            "system": "https://fhir.diz.uk-erlangen.de/identifiers/patient-id",
+            "value": "123456789"
+          }
+        ],
+        "name": [
+          {
+            "family": "Max",
+            "given": [
+              "Mustermann"
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "1234567890",
+            "use": "work"
+          }
+        ],
+        "address": [
+          {
+            "line": [
+              "Bahnhofstr. 1"
+            ],
+            "city": "Tuebingen",
+            "state": "BW",
+            "postalCode": "70070",
+            "country": "DE",
+            "period": {
+              "start": "2021-01-01",
+              "end": "2021-12-31"
+            }
+          }
+        ],
+        "birthDate": "2023-04-02",
+        "gender": "male"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Patient/123456789"
+      }
+    },
+    {
+      "fullUrl": "Observation/ST0001238",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "ST0001238",
+        "meta": {
+          "source": "ST.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-observation/StructureDefinition/ObservationPseudonymisiert"
+          ]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                  "code": "PSEUDED"
+                },
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR",
+                  "display": "Medical\u00b7record\u00b7number"
+                }
+              ]
+            },
+            "system": "https://fhir.diz.uk-erlangen.de/identifiers/observation-id",
+            "value": "ST0001238"
+          }
+        ],
+        "category": "tumor",
+        "subject": {
+          "reference": "Patient/123456789"
+        },
+        "effective": "2021-10-11",
+        "valueQuantity": {
+          "value": "1",
+          "unit": "tumor"
+        },
+        "status": "final",
+        "interpretation": "abnormal"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/ST0001238"
+      }
+    },
+    {
+      "fullUrl": "Condition/C72.0",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "C72.0",
+        "meta": {
+          "source": "ST.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-condition/StructureDefinition/ConditionPseudonymisiert"
+          ]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                "code": "PSEUDED"
+              },
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                "code": "MR",
+                "display": "Medical\u00b7record\u00b7number"
+              }
+            ]
+          },
+          "system": "https://fhir.diz.uk-erlangen.de/identifiers/condition-id",
+          "value": "C72.0"
+        }
+      ],
+      "category": "tumor",
+      "subject": {
+        "reference": "Patient/123456789"
+      },
+      "clinicalStatus": "active",
+      "verificationStatus": "confirmed",
+      "stage": "stage1",
+      "severity": "severe",
+      "bodySite": "right",
+      "encounter": {
+        "reference": "Encounter/example"
+      },
+      "onsetDateTime": "2021-05-18"
+    },
+    {
+      "fullUrl": "Procedure/45900",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "45900",
+        "meta": {
+          "source": "ST.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-procedure/StructureDefinition/ProcedurePseudonymisiert"
+          ]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                "code": "PSEUDED"
+              },
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                "code": "MR",
+                "display": "Medical\u00b7record\u00b7number"
+              }
+            ]
+          },
+          "system": "https://fhir.diz.uk-erlangen.de/identifiers/procedure-id",
+          "value": "45900"
+        }
+      ],
+      "category": "radiation",
+      "subject": {
+        "reference": "Patient/123456789"
+      },
+      "performedDateTime": "2021-10-02",
+      "status": "completed",
+      "procedure": {
+        "reference": "RadiationTherapy/example"
+      },
+      "bodySite": "right"
+    }
+  ]
+} 

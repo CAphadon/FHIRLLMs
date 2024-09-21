@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/meta-llama_CodeLlama-7b-Instruct-hf_experiment_cg2.py", line 80, in <module>
+    main()
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/meta-llama_CodeLlama-7b-Instruct-hf_experiment_cg2.py", line 8, in main
+    parser = etree.XMLParser(schema=schema_path)
+             ^^^^^
+NameError: name 'etree' is not defined. Did you mean: 'tree'?

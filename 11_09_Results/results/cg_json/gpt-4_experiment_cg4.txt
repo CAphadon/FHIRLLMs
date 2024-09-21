@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/gpt-4_experiment_cg4.py", line 43, in <module>
+    print(xml_to_json(xml_string))
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/gpt-4_experiment_cg4.py", line 8, in xml_to_json
+    patient_data = root.find('{http://www.gekid.de/namespace}Menge_Patient').find('{http://www.gekid.de/namespace}Patient').find('{http://www.gekid.de/namespace}Patienten_Stammdaten')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'find'

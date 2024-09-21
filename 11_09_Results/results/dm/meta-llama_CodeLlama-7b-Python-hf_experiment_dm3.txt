@@ -1,0 +1,27 @@
+### Output
+
+The output is FHIR json in a string format.
+
+### Dependencies
+
+The following dependencies are required in order to use this script.
+
+| Name | Version | URL |
+| ---- | ------- | --- |
+| Python | 3.7.6 | https://www.python.org |
+| Pandas | 1.1.5 | https://pandas.pydata.org |
+| lxml | 4.6.2 | https://pypi.org/project/lxml/ |
+| json | 2.0.9 | https://pypi.org/project/json/ |
+
+
+### License
+
+The code is licensed under the MIT license.
+
+### Disclaimer
+
+This script was created in order to fulfil a requirement of a customer. The customer is not our client. This means that we do not provide any warranty or support for this script.
+
+### Contribution
+
+Contribution to this project are more than welcome. Just create a pull request on GitHub.

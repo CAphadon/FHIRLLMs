@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/google_gemma-7b-it_experiment_cg6.py", line 7
+    json_data = json.dumps(dict(tree.attrib) | dict(tree.findall(".//text") | map(lambda node: {"fullUrl": node.attrib["fullUrl"], "resource": dict(node.attrib) & dict(node.findall(".//text") | map(lambda n: {"type": {"coding": [{"system": n.attrib["system"], "code": n.attrib["code"]}], "value": n.text}))})))
+                                                                                                                                                                                                                                                                                                                ^
+SyntaxError: closing parenthesis ')' does not match opening parenthesis '{'

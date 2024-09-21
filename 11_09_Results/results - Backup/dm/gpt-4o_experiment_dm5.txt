@@ -1,0 +1,71 @@
+To convert the provided XML input into a valid FHIR JSON of resourceType 'Bundle' with type 'transaction' and a 'Patient' as its entry, we need to follow the FHIR specification. Here is the corresponding FHIR JSON:
+
+```json
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "123456789",
+        "identifier": [
+          {
+            "system": "urn:oid:1.2.276.0.76.4.8",
+            "value": "Q123456"
+          },
+          {
+            "system": "urn:oid:1.2.276.0.76.4.9",
+            "value": "555555"
+          }
+        ],
+        "name": [
+          {
+            "family": "Max",
+            "given": [
+              "Mustermann"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "2023-04-02",
+        "address": [
+          {
+            "line": [
+              "Bahnhofstr. 1"
+            ],
+            "city": "Tuebingen",
+            "postalCode": "70070",
+            "country": "DE"
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    }
+  ]
+}
+```
+
+### Explanation:
+
+1. **Bundle Resource**:
+    - `resourceType`: "Bundle" indicates this resource is a bundle.
+    - `type`: "transaction" indicates that this bundle is a transaction bundle.
+
+2. **Patient Resource**:
+    - `resourceType`: "Patient" indicates the type of resource.
+    - `id`: "123456789" corresponds to the `Patient_ID` from the input XML.
+    - `identifier`: This contains two identifiers, one for the insurance number (`KrankenversichertenNr`) and one for the insurance company number (`KrankenkassenNr`).
+    - `name`: This contains the family name (`Patienten_Nachname`) and given name (`Patienten_Vornamen`).
+    - `gender`: "male" corresponds to the `Patienten_Geschlecht` value "M".
+    - `birthDate`: "2023-04-02" is the formatted `Patienten_Geburtsdatum`.
+    - `address`: This contains the address details from the `Menge_Adresse` section.
+
+3. **Request**:
+    - `method`: "POST" indicates that this entry is to be created on the server.
+    - `url`: "Patient" indicates the type of resource to be created.
+
+This JSON structure conforms to the FHIR standard for representing a patient resource within a transaction bundle.

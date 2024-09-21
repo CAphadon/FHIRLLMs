@@ -1,0 +1,47 @@
+Create a FHIR json that is a bundle containing a Patient.
+
+```json
+{
+  "type": "bundle",
+  "id": "patient-bundle",
+  "timestamp": "2022-01-01T00:00:00Z",
+  "metadata": {
+    "profile": [
+      "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
+    ]
+  },
+  "entry": [
+    {
+      "fullUrl": "Patient/example",
+      "resource": {
+        "id": "example",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h1>Patient: Example</h1><p>Example Patient.</p></div>"
+        },
+        "name": [
+          {
+            "use": "usual",
+            "given": ["Example"],
+            "family": ["Patient"]
+          }
+        ],
+        "gender": "Male",
+        "birthDate": "1980-01-01",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "555-1234"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+This FHIR JSON is a bundle containing a Patient resource. The bundle has a `type` of "bundle", an `id` of "patient-bundle", a `timestamp` of "2022-01-01T00:00:00Z", and metadata with a `profile` of "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" to indicate that this bundle follows the US Core Patient profile.
+
+The bundle contains a single `entry` with a `fullUrl` of "Patient/example" (a URL pointing to the Patient resource) and a `resource` containing the Patient resource itself.
+
+The Patient resource has an `id` of "example", a `text` section with a generated status and a div containing a human-readable representation of the patient, a `name` section with the usual name "Example Patient", a `gender` of "Male", a `birthDate` of "1980-01-01", and a `telecom` section with a telephone system and value of "555-1234".

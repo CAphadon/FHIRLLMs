@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/WizardLMTeam_WizardCoder-Python-13B-V1_0_experiment_cg5.py", line 99
+    'line': [patient.find('.//ns0:Patienten_Strasse', {'ns0': 'http://www.gekid.de/namespace').text], patient.find('.//ns0:Adresse', {'ns0': 'http://www.gekid.de/namespace').text], patient.find('.//ns0:Ort', {'ns0': 'http://www.gekid.de/namespace').text], patient.find('.//ns0:Bundesland', {'ns0': 'http://www.gekid.de/namespace').text]
+                                                                                             ^
+SyntaxError: closing parenthesis ')' does not match opening parenthesis '{'

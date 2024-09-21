@@ -1,0 +1,21 @@
+{
+    "resourceType": "Bundle",
+    "type": "transaction",
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "Patient",
+                "name": [
+                    {
+                        "family": "Max",
+                        "given": [
+                            "Mustermann"
+                        ]
+                    }
+                ],
+                "gender": "male",
+                "birthDate": "02.04.2023"
+            }
+        }
+    ]
+}

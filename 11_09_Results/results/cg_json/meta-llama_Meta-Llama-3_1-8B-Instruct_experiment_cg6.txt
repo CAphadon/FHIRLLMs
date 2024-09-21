@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/meta-llama_Meta-Llama-3_1-8B-Instruct_experiment_cg6.py", line 8, in <module>
+    tree = etree.parse("input.xml")
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "src/lxml/etree.pyx", line 3589, in lxml.etree.parse
+  File "src/lxml/parser.pxi", line 1958, in lxml.etree._parseDocument
+  File "src/lxml/parser.pxi", line 1984, in lxml.etree._parseDocumentFromURL
+  File "src/lxml/parser.pxi", line 1887, in lxml.etree._parseDocFromFile
+  File "src/lxml/parser.pxi", line 1200, in lxml.etree._BaseParser._parseDocFromFile
+  File "src/lxml/parser.pxi", line 633, in lxml.etree._ParserContext._handleParseResultDoc
+  File "src/lxml/parser.pxi", line 743, in lxml.etree._handleParseResult
+  File "src/lxml/parser.pxi", line 670, in lxml.etree._raiseParseError
+OSError: Error reading file 'input.xml': failed to load external entity "input.xml"

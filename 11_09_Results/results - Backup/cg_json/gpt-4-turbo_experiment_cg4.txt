@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/gpt-4-turbo_experiment_cg4.py", line 1
+    Certainly! Below is a Python program that parses the provided XML data and constructs a FHIR JSON resource of type 'Bundle' with a 'Patient' entry. This code uses the `xml.etree.ElementTree` for parsing XML and the `json` module for constructing JSON.
+             ^
+SyntaxError: invalid syntax

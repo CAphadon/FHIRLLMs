@@ -1,0 +1,62 @@
+{
+"resourceType" : "Bundle",
+  "type" : "transaction",
+  "entry" : [
+    {
+      "fullUrl" : "http://localhost:8000/fhir/Patient/123456789",
+      "resource" : {
+        "resourceType" : "Patient",
+        "id" : "123456789",
+        "extension" : [
+          {
+            "url" : "https://fhir.onki.de/StructureDefinition/gekid-patient-krankenversichertenNr",
+            "valueString" : "Q123456"
+          },
+          {
+            "url" : "https://fhir.onki.de/StructureDefinition/gekid-patient-krankenkassenNr",
+            "valueString" : "555555"
+          },
+          {
+            "url" : "https://fhir.onki.de/StructureDefinition/gekid-patient-nachname",
+            "valueString" : "Max"
+          },
+          {
+            "url" : "https://fhir.onki.de/StructureDefinition/gekid-patient-vornamen",
+            "valueString" : "Mustermann"
+          },
+          {
+            "url" : "https://fhir.onki.de/StructureDefinition/gekid-patient-geschlecht",
+            "valueString" : "m"
+          },
+          {
+            "url" : "https://fhir.onki.de/StructureDefinition/gekid-patient-geburtsdatum",
+            "valueDate" : "2023-04-02"
+          }
+        ],
+        "address" : [
+          {
+            "line" : "Bahnhofstr. 1",
+            "country" : "DE",
+            "postalCode" : "70070",
+            "city" : "Tuebingen"
+          }
+        ],
+        "identifier" : [
+          {
+            "value" : "123456789"
+          }
+        ]
+      },
+      "request" : {
+        "method" : "PUT",
+        "url" : "Patient/123456789"
+      }
+    }
+  ],
+  "link" : [
+    {
+      "relation" : "self",
+      "url" : "http://localhost:8000/fhir/Bundle/123456789/_history/1"
+    }
+  ]
+}

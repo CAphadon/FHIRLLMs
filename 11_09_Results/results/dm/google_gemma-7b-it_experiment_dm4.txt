@@ -1,0 +1,32 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "123456789",
+        "patient": {
+          "reference": "Patient/123456789"
+        },
+        "extension": [
+          {
+            "url": "patient.identifier",
+            "value": ["Q123456"]
+          }
+        ],
+        "name": {
+          "family": ["Max"],
+          "given": ["Mustermann"]
+        },
+        "birthDate": "02.04.2023",
+        "address": {
+          "address": "Bahnhofstr. 1",
+          "city": "Tuebingen",
+          "country": "DE",
+          "postalCode": "70070"
+        }
+      }
+    }
+  ]
+}

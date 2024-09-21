@@ -1,0 +1,55 @@
+```json
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "Patient/4b9a4fe5ba9e4f9684eeb6b4f0c9bce93c238b6e6a0f4b0a6f6d6b8efaf9371e",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "4b9a4fe5ba9e4f9684eeb6b4f0c9bce93c238b6e6a0f4b0a6f6d6b8efaf9371e",
+        "meta": {
+          "source": "22222244.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert"
+          ]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                  "code": "PSEUDED"
+                },
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR",
+                  "display": "Medical record number"
+                }
+              ]
+            },
+            "system": "https://fhir.diz.uk-erlangen.de/identifiers/patient-id",
+            "value": "123456789"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "2023-04-02",
+        "address": [
+          {
+            "type": "both",
+            "postalCode": "70070",
+            "country": "DE"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Patient/4b9a4fe5ba9e4f9684eeb6b4f0c9bce93c238b6e6a0f4b0a6f6d6b8efaf9371e"
+      }
+    }
+  ]
+}
+```
+
+This JSON represents the FHIR structure for the given XML data, ensuring that identifiers and other patient details are correctly mapped. The `id` and `fullUrl` are fictional and generated to uniquely identify the patient within the FHIR server. The `meta` data includes information about the source system and the specific profile used for the patient which is pseudonymized as per the Medizininformatik-Initiative standards. The `identifier` includes a medical record number and a coded system indicating that it's pseudonymized. The `gender` and `birthDate` fields are converted to FHIR standards, and `address` captures postal code and country.

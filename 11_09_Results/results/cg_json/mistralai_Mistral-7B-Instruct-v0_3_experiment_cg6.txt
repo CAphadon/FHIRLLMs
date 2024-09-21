@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg6.py", line 92
+    treatment_resource["location"}.update(treatment_site_reference)
+                                 ^
+SyntaxError: closing parenthesis '}' does not match opening parenthesis '['

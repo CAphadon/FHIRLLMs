@@ -1,0 +1,41 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "resourceType": "Patient",
+      "id": "123456789",
+      "name": {
+        "family": [
+          "Max"
+        ],
+        "given": [
+          "Mustermann"
+        ]
+      },
+      "birthDate": "02-04-2023",
+      "gender": "M",
+      "address": [
+        {
+          "use": "home",
+          "line": [
+            "Bahnhofstr. 1"
+          ],
+          "city": "Tuebingen",
+          "state": "DE",
+          "postalCode": "70070"
+        }
+      ],
+      "telecom": [
+        {
+          "system": "urn:iso:std:iso:11236:2007:ucc:telecom",
+          "value": "Q123456"
+        },
+        {
+          "system": "urn:oid:2.16.840.1.113883.3.84",
+          "value": "555555"
+        }
+      ]
+    }
+  ]
+}

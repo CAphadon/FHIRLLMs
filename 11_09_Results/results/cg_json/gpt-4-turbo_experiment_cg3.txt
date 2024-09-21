@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/gpt-4-turbo_experiment_cg3.py", line 83, in <module>
+    generate_fhir_json(xml_content)
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/gpt-4-turbo_experiment_cg3.py", line 12, in generate_fhir_json
+    patienten_stammdaten = patient.find('.//{http://www.gekid.de/namespace}Patienten_Stammdaten')
+                           ^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'find'

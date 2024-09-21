@@ -1,0 +1,68 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:0a7b16c4-118d-41c7-a922-c75c56d4d93a",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "0a7b16c4-118d-41c7-a922-c75c56d4d93a",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/StructureDefinition/Patient"
+          ]
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "code": "MR",
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203"
+                }
+              ]
+            },
+            "system": "urn:oid:172.16.31.10.2001.1001.101.104.16001",
+            "value": "Q123456"
+          },
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "code": "MC",
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203"
+                }
+              ]
+            },
+            "system": "urn:oid:2.16.840.1.113883.2.4.6.3",
+            "value": "555555"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "family": "Max",
+            "given": [
+              "Mustermann"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "2023-04-02",
+        "address": [
+          {
+            "use": "home",
+            "line": [
+              "Bahnhofstr. 1"
+            ],
+            "city": "Tuebingen",
+            "postalCode": "70070",
+            "country": "DE"
+          }
+        ]
+      }
+    }
+  ]
+}

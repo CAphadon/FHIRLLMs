@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/gpt-4_experiment_cg4.py", line 1
+    Sure, here is a Python code snippet to perform the task:
+                    ^^^^^^
+SyntaxError: invalid syntax

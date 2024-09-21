@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/meta-llama_CodeLlama-7b-Python-hf_experiment_cg5.py", line 65, in <module>
+    doc = minidom.parse('data.xml')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/xml/dom/minidom.py", line 1990, in parse
+    return expatbuilder.parse(file)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/xml/dom/expatbuilder.py", line 907, in parse
+    with open(file, 'rb') as fp:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'data.xml'

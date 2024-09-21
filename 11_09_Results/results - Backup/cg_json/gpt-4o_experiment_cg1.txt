@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/gpt-4o_experiment_cg1.py", line 1
+    ```python
+    ^
+SyntaxError: invalid syntax

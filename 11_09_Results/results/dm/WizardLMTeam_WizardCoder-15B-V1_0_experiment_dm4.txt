@@ -1,0 +1,30 @@
+Thanks!
+username_1: Hi @username_0,
+
+The input JSON has multiple namespaces and elements, which makes it difficult to convert into a valid FHIR JSON. Can you provide a clearer example?
+
+Also, can you provide more information about the expected output?
+
+Thanks!
+
+Best regards,
+<NAME>
+
+<NAME>
+Professor of Biomedical Engineering
+University of Colorado Denver
+Institute of Biomedical Engineering
+<EMAIL>
+http://www.colorado.edu/ibme/people/lisa-williams
+http://www.colorado.edu/ibme/research/labs/biomedical-engineering-department
+
+>
+username_0: Hi @username_1,
+
+Sorry for the confusion. I have updated the original post with the input JSON that I have received. 
+
+The expected output should be a valid FHIR JSON of resourceType 'Bundle' with type 'transaction' and a 'Patient' as its entry.
+
+Please let me know if you have any further questions or require additional information.
+
+Thanks!

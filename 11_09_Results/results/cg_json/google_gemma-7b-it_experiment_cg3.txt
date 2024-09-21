@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/google_gemma-7b-it_experiment_cg3.py", line 2
+    ```
+    ^
+SyntaxError: invalid syntax

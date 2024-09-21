@@ -1,0 +1,148 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "123456789",
+        "active": "true",
+        "birthDate": "2023-04-02",
+        "deceasedBoolean": "false",
+        "gender": "male",
+        "address": [
+          {
+            "address": "Bahnhofstr. 1",
+            "city": "Tuebingen",
+            "country": "Germany",
+            "state": "BW",
+            "postalCode": "70070"
+          }
+        ],
+        "name": [
+          {
+            "family": "Max",
+            "given": [
+              "Mustermann"
+            ],
+            "prefix": [
+              "Mr."
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "123456789"
+          }
+        ],
+        "managingOrganization": {
+          "reference": "Organization/123456789"
+        },
+        "extension": {
+          "url": "http://hl7.org/fhir/StructureDefinition/patient-kvk",
+          "valueString": "Q123456"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "/Patient/123456789"
+      },
+      "response": {
+        "status": "201 Created"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "ST0001238",
+        "subject": {
+          "reference": "#123456789"
+        },
+        "status": "completed",
+        "category": "tumor",
+        "description": "behandlungsende",
+        "performedDateTime": "2021-11-10T00:00:00+01:00",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/procedure-tumor-id",
+            "valueString": "1"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "icd-10",
+              "code": "C72.0",
+              "display": "Malignant neoplasm of the skin"
+            }
+          ]
+        },
+        "location": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/location-side",
+              "valueString": "R"
+            }
+          ],
+          "reference": "Location/123456789"
+        },
+        "performer": [
+          {
+            "actor": {
+              "reference": "Practitioner/123456789"
+            },
+            "role": "Maler"
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "/Procedure/ST0001238"
+      },
+      "response": {
+        "status": "201 Created"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "ST0001238-1",
+        "subject": {
+          "reference": "#123456789"
+        },
+        "status": "final",
+        "category": "tumor",
+        "code": {
+          "coding": [
+            {
+              "system": "icd-10",
+              "code": "C72.0",
+              "display": "Malignant neoplasm of the skin"
+            }
+          ]
+        },
+        "valueQuantity": {
+          "value": "4",
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org",
+          "code": "cm"
+        },
+        "effectiveDateTime": "2021-11-10T00:00:00+01:00",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/observation-tumor-side",
+            "valueString": "R"
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "/Observation/ST0001238-1"
+      },
+      "response": {
+        "status": "201 Created"
+      }
+    }
+  ]
+}

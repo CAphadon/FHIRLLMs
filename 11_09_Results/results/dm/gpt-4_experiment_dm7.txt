@@ -1,0 +1,33 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-example",
+  "type": "collection",
+  "entry": [
+    {
+      "fullUrl": "https://example.com/fhir/Patient/1",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "1",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative</b></p><p><b>id</b>: 1</p><p><b>identifier</b>: 12345</p><p><b>name</b>: John Doe</p><p><b>gender</b>: male</p><p><b>birthDate</b>: 2000-01-01</p></div>"
+        },
+        "identifier": [
+          {
+            "value": "12345"
+          }
+        ],
+        "name": [
+          {
+            "family": "Doe",
+            "given": [
+              "John"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "2000-01-01"
+      }
+    }
+  ]
+}

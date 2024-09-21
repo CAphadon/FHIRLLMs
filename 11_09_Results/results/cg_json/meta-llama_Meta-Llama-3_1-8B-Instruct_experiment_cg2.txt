@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/meta-llama_Meta-Llama-3_1-8B-Instruct_experiment_cg2.py", line 80, in <module>
+    patient_id = root.find(".//ns0:Patienten_Stammdaten/ns0:Patient_ID").text
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/xml/etree/ElementPath.py", line 405, in find
+    return next(iterfind(elem, path, namespaces), None)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/xml/etree/ElementPath.py", line 384, in iterfind
+    selector.append(ops[token[0]](next, token))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/xml/etree/ElementPath.py", line 185, in prepare_descendant
+    token = next()
+            ^^^^^^
+  File "/usr/local/lib/python3.12/xml/etree/ElementPath.py", line 87, in xpath_tokenizer
+    raise SyntaxError("prefix %r not found in prefix map" % prefix) from None
+SyntaxError: prefix 'ns0' not found in prefix map

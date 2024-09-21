@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/gpt-4_experiment_cg3.py", line 1
+    Executing gpt-4 did not work. 
+              ^^^
+SyntaxError: invalid syntax

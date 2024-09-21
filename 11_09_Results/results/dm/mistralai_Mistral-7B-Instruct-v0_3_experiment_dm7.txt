@@ -1,0 +1,37 @@
+{
+  "type": "bundle",
+  "id": "patient-bundle",
+  "timestamp": "2022-01-01T00:00:00Z",
+  "metadata": {
+    "profile": [
+      "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
+    ]
+  },
+  "entry": [
+    {
+      "fullUrl": "Patient/example",
+      "resource": {
+        "id": "example",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h1>Patient: Example</h1><p>Example Patient.</p></div>"
+        },
+        "name": [
+          {
+            "use": "usual",
+            "given": ["Example"],
+            "family": ["Patient"]
+          }
+        ],
+        "gender": "Male",
+        "birthDate": "1980-01-01",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "555-1234"
+          }
+        ]
+      }
+    }
+  ]
+}

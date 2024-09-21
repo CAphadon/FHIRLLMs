@@ -1,0 +1,4 @@
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/WizardLMTeam_WizardCoder-15B-V1_0_experiment_cg3.py", line 1
+    model crashed. 
+          ^^^^^^^
+SyntaxError: invalid syntax

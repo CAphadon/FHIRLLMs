@@ -1,0 +1,67 @@
+Create a FHIR json that is a bundle containing a Patient.
+
+```json
+{
+  "resourceType": "Bundle",
+  "id": "123",
+  "subject": {
+    "reference": "Patient/123"
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "123",
+        "extension": [
+          {
+            "url": "patient.address",
+            "value": {
+              "address": "123 Main St",
+              "city": "New York",
+              "state": "NY",
+              "zip": "10001"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+This json is a bundle containing a patient with the ID "123". The bundle entry contains a resource that is a patient resource with the same ID and an extension called "patient.address" that contains the patient's address information.
+
+However, this json does not include all of the patient's information. It only includes the patient's address extension. To include all of the patient's information, you would need to add additional entries to the bundle entry. For example:
+
+```json
+{
+  "resourceType": "Bundle",
+  "id": "123",
+  "subject": {
+    "reference": "Patient/123"
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "123",
+        "extension": [
+          {
+            "url": "patient.address",
+            "value": {
+              "address": "123 Main St",
+              "city": "New York",
+              "state": "NY",
+              "zip": "10001"
+            }
+          }
+        ],
+        "name": "John Doe",
+        "birthdate": "1980-01-01"
+      }
+    }
+  ]
+}
+```
+
+This json includes all of the patient's information, including their name, birthdate, and address.

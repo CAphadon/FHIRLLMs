@@ -1,0 +1,365 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "Patient/22222244",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "22222244",
+        "meta": {
+          "source": "22222244.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert"
+          ]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                  "code": "PSEUDED"
+                },
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR",
+                  "display": "Medical\u00b7record\u00b7number"
+                }
+              ]
+            },
+            "system": "https://fhir.diz.uk-erlangen.de/identifiers/patient-id",
+            "value": "22222244"
+          }
+        ],
+        "name": [
+          {
+            "family": "UKER",
+            "given": [
+              "UKER"
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "0",
+            "use": "work"
+          },
+          {
+            "system": "phone",
+            "value": "0",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "0",
+            "use": "work"
+          },
+          {
+            "system": "email",
+            "value": "0",
+            "use": "home"
+          }
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "Maximiliansplatz 2, 91054 Erlangen"
+            ],
+            "city": "Erlangen",
+            "state": "",
+            "postalCode": "91054",
+            "country": "DE",
+            "period": {
+              "start": "2000-01-01",
+              "end": "9999-12-31"
+            }
+          }
+        ],
+        "birthDate": "1900-01-01",
+        "managingOrganization": {
+          "reference": "Organization/ONKOSTAR"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Patient/22222244"
+      }
+    },
+    {
+      "fullUrl": "Patient/1055555888",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "1055555888",
+        "meta": {
+          "source": "999999.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert"
+          ]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                  "code": "PSEUDED"
+                },
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR",
+                  "display": "Medical\u00b7record\u00b7number"
+                }
+              ]
+            },
+            "system": "https://fhir.diz.uk-erlangen.de/identifiers/patient-id",
+            "value": "1055555888"
+          }
+        ],
+        "name": [
+          {
+            "family": "Doe",
+            "given": [
+              "John"
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "0",
+            "use": "work"
+          },
+          {
+            "system": "phone",
+            "value": "0",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "0",
+            "use": "work"
+          },
+          {
+            "system": "email",
+            "value": "0",
+            "use": "home"
+          }
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "Johnstr. 7"
+            ],
+            "city": "Johncity",
+            "state": "",
+            "postalCode": "91000",
+            "country": "DE",
+            "period": {
+              "start": "2000-01-01",
+              "end": "9999-12-31"
+            }
+          }
+        ],
+        "birthDate": "1900-09-11",
+        "managingOrganization": {
+          "reference": "Organization/ONKOSTAR"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Patient/1055555888"
+      }
+    },
+    {
+      "fullUrl": "Condition/c72.0",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "c72.0",
+        "meta": {
+          "source": "999999.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/ConditionPseudonymisiert"
+          ]
+        },
+        "category": "diagnosis",
+        "clinicalStatus": "active",
+        "verificationStatus": "confirmed",
+        "category": "diagnosis",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "C72.0",
+              "display": "Malignant neoplasm of thyroid gland"
+            }
+          ],
+          "text": "C72.0"
+        },
+        "subject": {
+          "reference": "Patient/1055555888"
+        },
+        "effective": {
+          "start": "2021-05-18",
+          "end": "9999-12-31"
+        },
+        "assembledFrom": [
+          {
+            "reference": "Observation/123456789"
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition/c72.0"
+      }
+    },
+    {
+      "fullUrl": "Observation/123456789",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "123456789",
+        "meta": {
+          "source": "999999.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/ObservationPseudonymisiert"
+          ]
+        },
+        "status": "final",
+        "category": "laboratory",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "C72.0",
+              "display": "Malignant neoplasm of thyroid gland"
+            }
+          ],
+          "text": "C72.0"
+        },
+        "subject": {
+          "reference": "Patient/1055555888"
+        },
+        "effective": {
+          "start": "2021-05-18",
+          "end": "9999-12-31"
+        },
+        "valueQuantity": {
+          "value": "123456789",
+          "unit": "ICD-10-GM",
+          "system": "http://unitsofmeasure.org",
+          "code": "C72.0"
+        },
+        "interpretation": "abnormal",
+        "performer": [
+          {
+            "reference": "Practitioner/123456789"
+          }
+        ],
+        "assembledFrom": [
+          {
+            "reference": "Condition/c72.0"
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation/123456789"
+      }
+    },
+    {
+      "fullUrl": "Procedure/45900",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "45900",
+        "meta": {
+          "source": "999999.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/ProcedurePseudonymisiert"
+          ]
+        },
+        "status": "completed",
+        "category": "intervention",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "45900",
+              "display": "Radiation therapy"
+            }
+          ],
+          "text": "45900"
+        },
+        "subject": {
+          "reference": "Patient/1055555888"
+        },
+        "performedDateTime": "2021-12-02",
+        "assembledFrom": [
+          {
+            "reference": "Procedure/45900"
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Procedure/45900"
+      }
+    },
+    {
+      "fullUrl": "Observation/ST0001238",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "ST0001238",
+        "meta": {
+          "source": "999999.ONKOSTAR:obds-to-fhir:0.0.0-test",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/ObservationPseudonymisiert"
+          ]
+        },
+        "status": "final",
+        "category": "laboratory",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "ST0001238",
+              "display": "Tumor"
+            }
+          ],
+          "text": "ST0001238"
+        },
+        "subject": {
+          "reference": "Patient/1055555888"
+        },
+        "effective": {
+          "start": "2021-05-18",
+          "end": "9999-12-31"
+        },
+        "valueQuantity": {
+          "value": "ST0001238",
+          "unit": "ST",
+          "system": "http://unitsofmeasure.org",
+          "code": "ST0001238"
+        },
+        "interpretation": "abnormal",
+        "performer": [
+          {
+            "reference": "Practitioner/123456789"
+          }
+        ],
+        "assembledFrom": [
+          {
+            "reference": "Condition/c72.0"
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation/ST0001238"
+      }
+    }
+  ]
+}

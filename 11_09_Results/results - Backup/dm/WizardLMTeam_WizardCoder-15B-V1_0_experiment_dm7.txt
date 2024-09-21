@@ -1,0 +1,36 @@
+Create a FHIR json that is a bundle containing a Patient.
+
+    Returns:
+        str: a FHIR json containing a Patient resource.
+    """
+    patient = {
+        "resourceType": "Patient",
+        "id": "example",
+        "name": [
+            {
+                "use": "official",
+                "family": "Smith",
+                "given": [
+                    "John",
+                    "Michael"
+                ]
+            }
+        ],
+        "gender": "male",
+        "birthDate": "1978-07-16"
+    }
+    bundle = {
+        "resourceType": "Bundle",
+        "type": "transaction",
+        "entry": [
+            {
+                "fullUrl": "urn:uuid:a130d5a0-d3e5-4c9d-808c-b37e6715f46a",
+                "resource": patient,
+                "request": {
+                    "method": "POST",
+                    "url": "Patient"
+                }
+            }
+        ]
+    }
+    return json.dumps(bundle, indent=4)

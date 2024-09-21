@@ -1,0 +1,408 @@
+You are tasked with turning this input xml file 
+<ns0:ADT_GEKID xmlns:ns0="http://www.gekid.de/namespace" Schema_Version="2.2.1">
+	<ns0:Absender Absender_ID="22222244" Software_ID="ONKOSTAR" Installations_ID="2.9.8">
+		<ns0:Absender_Bezeichnung>UKER</ns0:Absender_Bezeichnung>
+		<ns0:Absender_Ansprechpartner />
+		<ns0:Absender_Anschrift>Maximiliansplatz 2, 91054 Erlangen</ns0:Absender_Anschrift>
+	</ns0:Absender>
+	<ns0:Menge_Patient>
+		<ns0:Patient>
+            <ns0:Patienten_Stammdaten Patient_ID="123456789">
+                <ns0:KrankenversichertenNr>Q123456</ns0:KrankenversichertenNr>
+                <ns0:KrankenkassenNr>555555</ns0:KrankenkassenNr>
+                <ns0:Patienten_Nachname>Max</ns0:Patienten_Nachname>
+                <ns0:Patienten_Vornamen>Mustermann</ns0:Patienten_Vornamen>
+                <ns0:Patienten_Geschlecht>M</ns0:Patienten_Geschlecht>
+                <ns0:Patienten_Geburtsdatum>02.04.2023</ns0:Patienten_Geburtsdatum>
+                <ns0:Menge_Adresse>
+                    <ns0:Adresse>
+                        <ns0:Patienten_Strasse>Bahnhofstr. 1</ns0:Patienten_Strasse>
+                        <ns0:Patienten_Land>DE</ns0:Patienten_Land>
+                        <ns0:Patienten_PLZ>70070</ns0:Patienten_PLZ>
+                        <ns0:Patienten_Ort>Tuebingen</ns0:Patienten_Ort>
+                    </ns0:Adresse>
+                </ns0:Menge_Adresse>
+            </ns0:Patienten_Stammdaten>
+			<ns0:Menge_Meldung>
+				<ns0:Meldung Meldung_ID="ST0001238" Melder_ID="ST">
+					<ns0:Meldedatum>10.11.2021</ns0:Meldedatum>
+					<ns0:Meldebegruendung>I</ns0:Meldebegruendung>
+					<ns0:Meldeanlass>behandlungsende</ns0:Meldeanlass>
+					<ns0:Tumorzuordnung Tumor_ID="1">
+                        <ns0:Primaertumor_ICD_Code>C72.0</ns0:Primaertumor_ICD_Code>
+                        <ns0:Primaertumor_ICD_Version>10 2021 GM</ns0:Primaertumor_ICD_Version>
+                        <ns0:Diagnosedatum>18.05.2021</ns0:Diagnosedatum>
+                        <ns0:Seitenlokalisation>R</ns0:Seitenlokalisation>
+                    </ns0:Tumorzuordnung>
+					<ns0:Menge_ST>
+						<ns0:ST ST_ID="45900">
+							<ns0:ST_Intention>P</ns0:ST_Intention>
+							<ns0:ST_Stellung_OP>N</ns0:ST_Stellung_OP>
+							<ns0:Menge_Bestrahlung>
+								<ns0:Bestrahlung>
+									<ns0:ST_Zielgebiet>5.4.-</ns0:ST_Zielgebiet>
+									<ns0:ST_Seite_Zielgebiet>T</ns0:ST_Seite_Zielgebiet>
+								</ns0:Bestrahlung>
+								<ns0:Bestrahlung>
+									<ns0:ST_Zielgebiet>1.2</ns0:ST_Zielgebiet>
+									<ns0:ST_Seite_Zielgebiet>R</ns0:ST_Seite_Zielgebiet>
+									<ns0:ST_Ende_Datum>02.12.2021</ns0:ST_Ende_Datum>
+								</ns0:Bestrahlung>
+							</ns0:Menge_Bestrahlung>
+							<ns0:ST_Ende_Grund>L</ns0:ST_Ende_Grund>
+							<ns0:Menge_Nebenwirkung>
+								<ns0:ST_Nebenwirkung>
+									<ns0:Nebenwirkung_Grad>4</ns0:Nebenwirkung_Grad>
+								</ns0:ST_Nebenwirkung>
+							</ns0:Menge_Nebenwirkung>
+						</ns0:ST>
+					</ns0:Menge_ST>
+				</ns0:Meldung>
+			</ns0:Menge_Meldung>
+		</ns0:Patient>
+	</ns0:Menge_Patient>
+	<ns0:Menge_Melder>
+		<ns0:Melder Melder_ID="ST">
+			<ns0:Meldende_Stelle>ST</ns0:Meldende_Stelle>
+		</ns0:Melder>
+	</ns0:Menge_Melder>
+</ns0:ADT_GEKID> into a valid FHIR json.
+Additionally you are given two other files as example. The first one is a xml similar to the input file, while the second one is the corresponing FHIR json.The example input xml is this: 
+<ns0:ADT_GEKID xmlns:ns0="http://www.gekid.de/namespace" Schema_Version="2.2.1">
+	<ns0:Absender Absender_ID="999999" Software_ID="ONKOSTAR" Installations_ID="2.9.8">
+		<ns0:Absender_Bezeichnung>UKER</ns0:Absender_Bezeichnung>
+		<ns0:Absender_Ansprechpartner />
+		<ns0:Absender_Anschrift>Maximiliansplatz 2, 91054 Erlangen</ns0:Absender_Anschrift>
+	</ns0:Absender>
+	<ns0:Menge_Patient>
+		<ns0:Patient>
+            <ns0:Patienten_Stammdaten Patient_ID="1055555888">
+                <ns0:KrankenversichertenNr>Q00000000</ns0:KrankenversichertenNr>
+                <ns0:KrankenkassenNr>10000000</ns0:KrankenkassenNr>
+                <ns0:Patienten_Nachname>Doe</ns0:Patienten_Nachname>
+                <ns0:Patienten_Vornamen>John</ns0:Patienten_Vornamen>
+                <ns0:Patienten_Geschlecht>M</ns0:Patienten_Geschlecht>
+                <ns0:Patienten_Geburtsdatum>11.09.1900</ns0:Patienten_Geburtsdatum>
+                <ns0:Menge_Adresse>
+                    <ns0:Adresse>
+                        <ns0:Patienten_Strasse>Johnstr. 7</ns0:Patienten_Strasse>
+                        <ns0:Patienten_Land>DE</ns0:Patienten_Land>
+                        <ns0:Patienten_PLZ>91000</ns0:Patienten_PLZ>
+                        <ns0:Patienten_Ort>Johncity</ns0:Patienten_Ort>
+                    </ns0:Adresse>
+                </ns0:Menge_Adresse>
+            </ns0:Patienten_Stammdaten>
+			<ns0:Menge_Meldung>
+				<ns0:Meldung Meldung_ID="ST0001238" Melder_ID="ST">
+					<ns0:Meldedatum>10.11.2021</ns0:Meldedatum>
+					<ns0:Meldebegruendung>I</ns0:Meldebegruendung>
+					<ns0:Meldeanlass>behandlungsende</ns0:Meldeanlass>
+					<ns0:Tumorzuordnung Tumor_ID="1">
+                        <ns0:Primaertumor_ICD_Code>C72.0</ns0:Primaertumor_ICD_Code>
+                        <ns0:Primaertumor_ICD_Version>10 2021 GM</ns0:Primaertumor_ICD_Version>
+                        <ns0:Diagnosedatum>18.05.2021</ns0:Diagnosedatum>
+                        <ns0:Seitenlokalisation>R</ns0:Seitenlokalisation>
+                    </ns0:Tumorzuordnung>
+					<ns0:Menge_ST>
+						<ns0:ST ST_ID="45900">
+							<ns0:ST_Intention>P</ns0:ST_Intention>
+							<ns0:ST_Stellung_OP>N</ns0:ST_Stellung_OP>
+							<ns0:Menge_Bestrahlung>
+								<ns0:Bestrahlung>
+									<ns0:ST_Zielgebiet>5.4.-</ns0:ST_Zielgebiet>
+									<ns0:ST_Seite_Zielgebiet>T</ns0:ST_Seite_Zielgebiet>
+								</ns0:Bestrahlung>
+								<ns0:Bestrahlung>
+									<ns0:ST_Zielgebiet>1.2</ns0:ST_Zielgebiet>
+									<ns0:ST_Seite_Zielgebiet>R</ns0:ST_Seite_Zielgebiet>
+									<ns0:ST_Ende_Datum>02.12.2021</ns0:ST_Ende_Datum>
+								</ns0:Bestrahlung>
+							</ns0:Menge_Bestrahlung>
+							<ns0:ST_Ende_Grund>L</ns0:ST_Ende_Grund>
+							<ns0:Menge_Nebenwirkung>
+								<ns0:ST_Nebenwirkung>
+									<ns0:Nebenwirkung_Grad>4</ns0:Nebenwirkung_Grad>
+								</ns0:ST_Nebenwirkung>
+							</ns0:Menge_Nebenwirkung>
+						</ns0:ST>
+					</ns0:Menge_ST>
+				</ns0:Meldung>
+			</ns0:Menge_Meldung>
+		</ns0:Patient>
+	</ns0:Menge_Patient>
+	<ns0:Menge_Melder>
+		<ns0:Melder Melder_ID="ST">
+			<ns0:Meldende_Stelle>ST</ns0:Meldende_Stelle>
+		</ns0:Melder>
+	</ns0:Menge_Melder>
+</ns0:ADT_GEKID> And the corresponding output FHIR json is this: 
+{"resourceType": "Bundle", "type": "transaction", "entry": [{"fullUrl": "Patient/d9d6b458471f3ff3d65af6021a10d1112718a032eec4b843606616c5faa29937", "resource": {"resourceType": "Patient", "id": "d9d6b458471f3ff3d65af6021a10d1112718a032eec4b843606616c5faa29937", "meta": {"source": "999999.ONKOSTAR:obds-to-fhir:0.0.0-test", "profile": ["https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert"]}, "identifier": [{"type": {"coding": [{"system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue", "code": "PSEUDED"}, {"system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "MR", "display": "Medical\u00b7record\u00b7number"}]}, "system": "https://fhir.diz.uk-erlangen.de/identifiers/patient-id", "value": "1055555888"}], "gender": "male", "birthDate": "1900-07", "address": [{"type": "both", "postalCode": "91000", "country": "DE"}]}, "request": {"method": "PUT", "url": "Patient/d9d6b458471f3ff3d65af6021a10d1112718a032eec4b843606616c5faa29937"}}]}
+The according FHIR json to this input looks like this:
+{
+    "resourceType": "Bundle",
+    "type": "transaction",
+    "id": "exampleBundle",
+    "entry": [
+        {
+            "fullUrl": "Patient/123456789",
+            "resource": {
+                "resourceType": "Patient",
+                "id": "123456789",
+                "name": [
+                    {
+                        "family": "Max",
+                        "given": ["Mustermann"]
+                    }
+                ],
+                "gender": "M",
+                "birthDate": "2023-04-02",
+                "address": [
+                    {
+                        "use": "home",
+                        "line": ["Bahnhofstr. 1"],
+                        "city": "Tuebingen",
+                        "state": "Baden-Wurttemberg",
+                        "postalCode": "70070",
+                        "country": "DE"
+                    }
+                ],
+                "telecom": [
+                    {
+                        "system": "phone",
+                        "value": "017123456789"
+                    }
+                ],
+                "managingOrganization": {
+                    "reference": "Organization/22222244"
+                },
+                "identifier": [
+                    {
+                        "system": "Krankenversicherungsnummer",
+                        "value": "Q123456"
+                    }
+                ]
+            },
+            "request": {
+                "method": "PUT",
+                "url": "Patient/123456789"
+            }
+        },
+        {
+            "fullUrl": "DiagnosticReport/exampleReport",
+            "resource": {
+                "resourceType": "DiagnosticReport",
+                "id": "exampleReport",
+                "status": "final",
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/icd-10-cm",
+                            "code": "C72.0"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/123456789"
+                },
+                "issued": "2021-11-10",
+                "result": [
+                    {
+                        "code": {
+                            "coding": [
+                                {
+                                    "system": "http://snomed.info/sct",
+                                    "code": "107184002"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "request": {
+                "method": "POST",
+                "url": "DiagnosticReport"
+            }
+        },
+        {
+            "fullUrl": "MedicationRequest/exampleRequest",
+            "resource": {
+                "resourceType": "MedicationRequest",
+                "id": "exampleRequest",
+                "subject": {
+                    "reference": "Patient/123456789"
+                },
+                "intent": "order",
+                "medicationCodeableConcept": {
+                    "text": "Cisplatin"
+                },
+                "dosage": {
+                    "quantity": {
+                        "value": 100,
+                        "unit": "mg"
+                    },
+                    "route": "IV"
+                },
+                "note": [
+                    "Please administer over 2 hours"
+                ]
+            },
+            "request": {
+                "method": "POST",
+                "url": "MedicationRequest"
+            }
+        }
+    ]
+}
+
+To solve this task you should:
+
+1. Create a Python script that reads the input xml file and parses it using the xml.etree.ElementTree module.
+2. Extract the necessary information from the parsed xml and map it to FHIR resources.
+3. Create a new Bundle resource with the extracted FHIR resources and their corresponding entries.
+4. Convert the created Bundle resource to FHIR json using the json library.
+
+Here's a Python script that accomplishes the task:
+
+```python
+import xml.etree.ElementTree as ET
+import json
+from datetime import datetime
+from typing import List
+
+class Resource:
+    resource_type: str
+    id: str
+    meta: dict
+    def __init__(self, resource_type: str, id: str, meta: dict = None):
+        self.resource_type = resource_type
+        self.id = id
+        self.meta = meta or {}
+
+class Bundle(Resource):
+    type: str
+    id: str
+    entry: List[dict]
+
+class Patient(Resource):
+    name: List[dict]
+    gender: str
+    birthDate: str
+    address: List[dict]
+    telecom: List[dict]
+    managingOrganization: str
+    identifier: List[dict]
+
+class Address(Resource):
+    type: str
+    line: List[str]
+    city: str
+    state: str
+    postalCode: str
+    country: str
+
+class Identifier(Resource):
+    system: str
+    value: str
+
+class DiagnosticReport(Resource):
+    status: str
+    code: dict
+    subject: str
+    issued: str
+    result: List[dict]
+
+class Result(Resource):
+    code: dict
+
+class MedicationRequest(Resource):
+    subject: str
+    intent: str
+    medicationCodeableConcept: dict
+    dosage: dict
+    note: List[str]
+
+def parse_xml(xml_data: str):
+    root = ET.fromstring(xml_data)
+    patient = Patient("Patient", root.attrib["Patient_ID"])
+    patient.name = [{"family": elem.text for elem in root.find("ns0:Patienten_Nachname").findall("ns0:Patienten_Vornamen")}]
+    patient.gender = root.find("ns0:Patienten_Geschlecht").text
+    patient.birthDate = root.find("ns0:Patienten_Geburtsdatum").text
+    address = Address("home", [], root.find("ns0:Patienten_Ort").text, root.find("ns0:Patienten_PLZ").text, "DE")
+    address.line = [elem.text for elem in root.find("ns0:Patienten_Strasse").findall("ns0:Patienten_Zusatzstrasse")]
+    patient.address.append(address)
+    patient.telecom.append({"system": "phone", "value": "017123456789"})
+    patient.managingOrganization = root.find("ns0:Absender_Bezeichnung").text
+    patient.identifier.append({"system": "Krankenversichertennummer", "value": root.find("ns0:KrankenversichertenNr").text})
+
+    diagnostic_report = DiagnosticReport("DiagnosticReport", "exampleReport", {"source": root.attrib["Schema_Version"]})
+    diagnostic_report.status = "final"
+    diagnostic_report.code = {"coding": [{"system": "http://terminology.hl7.org/CodeSystem/icd-10-cm", "code": root.find("ns0:Primaertumor_ICD_Code").text}]}
+    diagnostic_report.subject = f"Patient/{patient.id}"
+    diagnostic_report.issued = datetime.now().isoformat()
+    result = Result("Result", "exampleResult", {"source": root.attrib["Schema_Version"]})
+    result.code = {"coding": [{"system": "http://snomed.info/sct", "code": "107184002"}]}
+    diagnostic_report.result.append(result)
+
+    medication_request = MedicationRequest("MedicationRequest", "exampleRequest", {"source": root.attrib["Schema_Version"]})
+    medication_request.subject = f"Patient/{patient.id}"
+    medication_request.intent = "order"
+    medication_request.medicationCodeableConcept = {"text": root.find("ns0:Menge_ST").find("ns0:ST").find("ns0:Bestrahlung").find("ns0:ST_Zielgebiet").text}
+    medication_request.dosage = {"quantity": {"value": 100, "unit": "mg"}, "route": "IV"}
+    medication_request.note = ["Please administer over 2 hours"]
+
+    bundle = Bundle("Bundle", "exampleBundle", {"type": "transaction"})
+    bundle.entry = [
+        {
+            "fullUrl": f"Patient/{patient.id}",
+            "resource": patient
+        },
+        {
+            "fullUrl": f"DiagnosticReport/exampleReport",
+            "resource": diagnostic_report
+        },
+        {
+            "fullUrl": f"MedicationRequest/exampleRequest",
+            "resource": medication_request
+        }
+    ]
+
+    return bundle
+
+if __name__ == "__main__":
+    xml_data = """
+    <ns0:ADT_GEKID xmlns:ns0="http://www.gekid.de/namespace" Schema_Version="2.2.1">
+        <ns0:Absender Absender_ID="22222244" Software_ID="ONKOSTAR" Installations_ID="2.9.8">
+            <ns0:Absender_Bezeichnung>UKER</ns0:Absender_Bezeichnung>
+            <ns0:Absender_Ansprechpartner />
+            <ns0:Absender_Anschrift>Maximiliansplatz 2, 91054 Erlangen</ns0:Absender_Anschrift>
+        </ns0:Absender>
+        <ns0:Menge_Patient>
+            <ns0:Patient>
+                <ns0:Patienten_Stammdaten Patient_ID="123456789">
+                    <ns0:KrankenversichertenNr>Q123456</ns0:KrankenversichertenNr>
+                    <ns0:KrankenkassenNr>555555</ns0:KrankenkassenNr>
+                    <ns0:Patienten_Nachname>Max</ns0:Patienten_Nachname>
+                    <ns0:Patienten_Vornamen>Mustermann</ns0:Patienten_Vornamen>
+                    <ns0:Patienten_Geschlecht>M</ns0:Patienten_Geschlecht>
+                    <ns0:Patienten_Geburtsdatum>02.04.2023</ns0:Patienten_Geburtsdatum>
+                    <ns0:Menge_Adresse>
+                        <ns0:Adresse>
+                            <ns0:Patienten_Strasse>Bahnhofstr. 1</ns0:Patienten_Strasse>
+                            <ns0:Patienten_Land>DE</ns0:Patienten_Land>
+                            <ns0:Patienten_PLZ>70070</ns0:Patienten_PLZ>
+                            <ns0:Patienten_Ort>Tuebingen</ns0:Patienten_Ort>
+                        </ns0:Adresse>
+                    </ns0:Menge_Adresse>
+                </ns0:Patienten_Stammdaten>
+               ...
+            </ns0:Patient>
+        </ns0:Menge_Patient>
+       ...
+    </ns0:ADT_GEKID>
+    """
+
+    fhir_json = json.dumps(parse_xml(xml_data))
+    print(fhir_json)
+```
+
+This script defines classes for each FHIR resource that is required to represent the XML data. The `parse_xml` function parses the input XML, extracts the necessary information, and maps it to FHIR resources. Finally, a new Bundle resource is created with the extracted FHIR resources and their corresponding entries, and it is converted to FHIR json.

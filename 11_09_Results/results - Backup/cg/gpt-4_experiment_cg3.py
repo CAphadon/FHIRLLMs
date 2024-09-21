@@ -1,0 +1,2 @@
+Executing gpt-4 did not work. 
+Error code: 400 - {'error': {'message': "This model's maximum context length is 8192 tokens. However, your messages resulted in 9946 tokens. Please reduce the length of the messages.", 'type': 'invalid_request_error', 'param': 'messages', 'code': 'context_length_exceeded'}}

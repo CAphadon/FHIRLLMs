@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg1.py", line 138, in <module>
+    print(parse_resource(root))
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg1.py", line 53, in parse_resource
+    for patient in adt_gekid.findall(".//ns0:Menge_Patient/ns0:Patient"):
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/xml/etree/ElementPath.py", line 411, in findall
+    return list(iterfind(elem, path, namespaces))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/xml/etree/ElementPath.py", line 384, in iterfind
+    selector.append(ops[token[0]](next, token))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/xml/etree/ElementPath.py", line 185, in prepare_descendant
+    token = next()
+            ^^^^^^
+  File "/usr/local/lib/python3.12/xml/etree/ElementPath.py", line 87, in xpath_tokenizer
+    raise SyntaxError("prefix %r not found in prefix map" % prefix) from None
+SyntaxError: prefix 'ns0' not found in prefix map

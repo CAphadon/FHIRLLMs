@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/meta-llama_Meta-Llama-3_1-8B-Instruct_experiment_cg3.py", line 5, in <module>
+    from fhirpy import Client
+ImportError: cannot import name 'Client' from 'fhirpy' (/home/ubuntu/.local/lib/python3.12/site-packages/fhirpy/__init__.py)

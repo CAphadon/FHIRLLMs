@@ -1,0 +1,4 @@
+01: Original
+02: <Patienten_Stammdaten geändert> -> Alles außer Land
+03: <Absender> -> Absender_ID
+04: 02 & 03

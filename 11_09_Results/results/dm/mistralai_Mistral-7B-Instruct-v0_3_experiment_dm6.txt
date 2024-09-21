@@ -1,0 +1,115 @@
+{
+    "resourceType": "Bundle",
+    "type": "transaction",
+    "id": "exampleBundle",
+    "entry": [
+        {
+            "fullUrl": "Patient/123456789",
+            "resource": {
+                "resourceType": "Patient",
+                "id": "123456789",
+                "name": [
+                    {
+                        "family": "Max",
+                        "given": ["Mustermann"]
+                    }
+                ],
+                "gender": "M",
+                "birthDate": "2023-04-02",
+                "address": [
+                    {
+                        "use": "home",
+                        "line": ["Bahnhofstr. 1"],
+                        "city": "Tuebingen",
+                        "state": "Baden-Wurttemberg",
+                        "postalCode": "70070",
+                        "country": "DE"
+                    }
+                ],
+                "telecom": [
+                    {
+                        "system": "phone",
+                        "value": "017123456789"
+                    }
+                ],
+                "managingOrganization": {
+                    "reference": "Organization/22222244"
+                },
+                "identifier": [
+                    {
+                        "system": "Krankenversicherungsnummer",
+                        "value": "Q123456"
+                    }
+                ]
+            },
+            "request": {
+                "method": "PUT",
+                "url": "Patient/123456789"
+            }
+        },
+        {
+            "fullUrl": "DiagnosticReport/exampleReport",
+            "resource": {
+                "resourceType": "DiagnosticReport",
+                "id": "exampleReport",
+                "status": "final",
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/icd-10-cm",
+                            "code": "C72.0"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/123456789"
+                },
+                "issued": "2021-11-10",
+                "result": [
+                    {
+                        "code": {
+                            "coding": [
+                                {
+                                    "system": "http://snomed.info/sct",
+                                    "code": "107184002"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "request": {
+                "method": "POST",
+                "url": "DiagnosticReport"
+            }
+        },
+        {
+            "fullUrl": "MedicationRequest/exampleRequest",
+            "resource": {
+                "resourceType": "MedicationRequest",
+                "id": "exampleRequest",
+                "subject": {
+                    "reference": "Patient/123456789"
+                },
+                "intent": "order",
+                "medicationCodeableConcept": {
+                    "text": "Cisplatin"
+                },
+                "dosage": {
+                    "quantity": {
+                        "value": 100,
+                        "unit": "mg"
+                    },
+                    "route": "IV"
+                },
+                "note": [
+                    "Please administer over 2 hours"
+                ]
+            },
+            "request": {
+                "method": "POST",
+                "url": "MedicationRequest"
+            }
+        }
+    ]
+}

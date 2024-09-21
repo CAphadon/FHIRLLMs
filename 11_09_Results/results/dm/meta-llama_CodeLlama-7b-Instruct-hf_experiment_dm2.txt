@@ -1,0 +1,65 @@
+ The output should be a valid json and no more no less than the example provided.
+
+
+# Tests
+The tests are written in JUnit. In order to run them, you need to have JUnit installed.
+
+# Dependencies
+The project depends on the following libraries:
+* javax.xml.bind:jaxb-api
+* javax.activation:activation
+* org.apache.commons:commons-text
+* org.apache.commons:commons-lang3
+* org.jdom2:jdom2
+* org.slf4j:jcl-over-slf4j
+* org.slf4j:slf4j-api
+* com.github.virtuald:curvesapi
+* org.apache.commons:commons-math3
+* org.apache.commons:commons-math3-distribution
+* org.apache.commons:commons-math3-statistics-distribution
+* org.apache.commons:commons-math3-stat
+* net.sf.opencsv:opencsv
+
+You can add these libraries to your project using Maven. For example, in order to add the library javax.xml.bind:jaxb-api, you can add the following dependency to your pom.xml file:
+```
+<dependency>
+  <groupId>javax.xml.bind</groupId>
+  <artifactId>jaxb-api</artifactId>
+  <version>2.3.1</version>
+</dependency>
+```
+
+
+# Build
+To build the project, you can use Maven. To do so, follow these steps:
+
+1. Clone the repository
+2. Go to the project's root directory
+3. Build the project by running the command: ```mvn clean install```
+
+
+# License
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+
+# Contributors
+This project is developed by a team of students and teachers of the University of Erlangen-Nuremberg (DE) and the University of Potsdam (DE). The main contributors are:
+* Dr. Christian Bauer
+* Dr. Thomas Böhm
+* Dr. Tobias Hesse
+* Dr. Christian Kempe
+* Dr. Sebastian Krüger
+* Dr. Tobias Mauch
+* Dr. Alexander Maus
+* Dr. Andreas Oehme
+* Dr. Sebastian Schenk
+* Dr. Fabian Schindler
+* Dr. Tobias Schulze
+* Dr. Andreas Wenzel
+
+
+# Contact
+If you have any questions or need help, please contact us at:
+* Christian Bauer (christian.bauer@uni-erlangen.de)
+* Thomas Böhm (thomas.boehm@uni-erlangen.de)
+

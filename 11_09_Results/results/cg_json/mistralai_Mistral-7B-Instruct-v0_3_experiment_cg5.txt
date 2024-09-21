@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg5.py", line 137, in <module>
+    print(xml_to_fhir_json(xml_str))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg5.py", line 60, in xml_to_fhir_json
+    input_dict = xml_to_dict(xml_str)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/FHIRexperiments_01/results/cg/mistralai_Mistral-7B-Instruct-v0_3_experiment_cg5.py", line 15, in xml_to_dict
+    value = ET.tostring(elem, encoding='utf-8', method='elements').decode('utf-8')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/xml/etree/ElementTree.py", line 1084, in tostring
+    ElementTree(element).write(stream, encoding,
+  File "/usr/local/lib/python3.12/xml/etree/ElementTree.py", line 711, in write
+    raise ValueError("unknown method %r" % method)
+ValueError: unknown method 'elements'
