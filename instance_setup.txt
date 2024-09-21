@@ -1,0 +1,8 @@
+Instance setup: https://cloud.denbi.de/wiki/Compute_Center/Tuebingen/
+Before installing python: 
+	o sudo apt-get install libbz2-dev 
+	o sudo apt-get install lzma
+	o sudo apt-get install liblzma-dev
+	o sudo apt-get install libbz2-dev
+Install newest python version following method 2 but not using the tmp: https://phoenixnap.com/kb/how-to-install-python-3-ubuntu 
+Installing cuda drivers: https://www.cherryservers.com/blog/install-cuda-ubuntu
